@@ -3,7 +3,7 @@
 /**
  * CrossContextsSettings
  *
- * Copyright 2014 by goldsky <goldsky@virtudraft.com>
+ * Copyright 2014-2015 by goldsky <goldsky@virtudraft.com>
  *
  * This file is part of CrossContextsSettings, a custom plugin to manage cross
  * contexts' settings
@@ -59,11 +59,7 @@ class CrossContextsSettingsSettingsGetListProcessor extends modObjectGetListProc
         $c = $this->modx->newQuery($this->classKey);
         $c = $this->prepareQueryBeforeCount($c);
         $version = $this->modx->getVersionData();
-        if ($version['major_version'] <= 2) {
-            $data['total'] = $this->modx->crosscontextssettings->getQueryCount($this->classKey, $c);
-        } else {
-            $data['total'] = $this->modx->getCount($this->classKey, $c);
-        }
+        $data['total'] = $this->modx->crosscontextssettings->getQueryCount($this->classKey, $c);
         $c = $this->prepareQueryAfterCount($c);
         $sortClassKey = $this->getSortClassKey();
         $sortKey = $this->modx->getSelectColumns($sortClassKey, $this->getProperty('sortAlias', $sortClassKey), '', array($this->getProperty('sort')));
@@ -120,6 +116,7 @@ class CrossContextsSettingsSettingsGetListProcessor extends modObjectGetListProc
         $objectArray = $object->toArray();
 
         $output = array();
+        $row = array();
         if (!empty($this->columns) && is_array($this->columns)) {
             foreach ($this->columns as $column) {
                 if ($column === 'key') {
@@ -129,10 +126,21 @@ class CrossContextsSettingsSettingsGetListProcessor extends modObjectGetListProc
                         'context_key' => $column,
                         'key' => $objectArray['key'],
                     ));
+                    if (!isset($output['xtype'])) {
+                        $output['xtype'] = '';
+                    }
                     if ($setting) {
                         $output[$column] = $setting->get('value');
+                        $output['xtype'] = $setting->get('xtype');
                     } else {
                         $output[$column] = '';
+                        if (empty($output['xtype'])) {
+                            $check = $this->modx->getObject($this->classKey, array(
+                                'key' => $objectArray['key'],
+                                'xtype:!=' => '',
+                            ));
+                            $output['xtype'] = $check->get('xtype');
+                        }
                     }
                 }
             }

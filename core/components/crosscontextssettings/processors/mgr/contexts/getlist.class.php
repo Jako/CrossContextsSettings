@@ -3,7 +3,7 @@
 /**
  * CrossContextsSettings
  *
- * Copyright 2014 by goldsky <goldsky@virtudraft.com>
+ * Copyright 2014-2015 by goldsky <goldsky@virtudraft.com>
  *
  * This file is part of CrossContextsSettings, a custom plugin to manage cross
  * contexts' settings
@@ -59,12 +59,6 @@ class CrossContextsSettingsContextsGetListProcessor extends modObjectGetListProc
             } else {
                 $i = $k + 1;
             }
-            /**
-             * @todo: add more editor type variant here
-             */
-            $v['editor'] = array(
-                'xtype' => 'textfield'
-            );
             $newList[$i] = $v;
         }
         ksort($newList);

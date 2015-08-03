@@ -3,7 +3,7 @@
 /**
  * CrossContextsSettings
  *
- * Copyright 2014 by goldsky <goldsky@virtudraft.com>
+ * Copyright 2014-2015 by goldsky <goldsky@virtudraft.com>
  *
  * This file is part of CrossContextsSettings, a custom plugin to manage cross
  * contexts' settings
@@ -27,8 +27,8 @@
  */
 class CrossContextsSettings {
 
-    const VERSION = '1.0.0';
-    const RELEASE = 'beta3';
+    const VERSION = '1.0.2';
+    const RELEASE = 'pl';
 
     /**
      * modX object

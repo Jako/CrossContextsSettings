@@ -1,11 +1,13 @@
 CrossContextsSettings.grid.Settings = function (config) {
     config = config || {};
 
-    var colModel = [];
     var columns = [];
+    var fields = [];
+    var contexts = [];
+    var _this = this;
 
     if (config.record) {
-        colModel.push({
+        columns.push({
             header: _('key')
             , width: 300
             , sortable: true
@@ -13,29 +15,49 @@ CrossContextsSettings.grid.Settings = function (config) {
             , locked: true
             , id: 'key'
         });
-        columns.push('key');
+        fields.push('key');
+        fields.push('xtype');
         Ext.each(config.record, function (item, index) {
-            colModel.push({
+            columns.push({
                 header: item.key
                 , width: 200
                 , sortable: false
                 , dataIndex: item.key
                 , id: item.key
-                , editor: item.editor
+                , editable: true
+                , renderer: _this.renderDynField.createDelegate(_this, [_this], true)
             });
-            columns.push(item.key);
+            fields.push(item.key);
+            contexts.push(item.key);
         });
     }
+    var cm = new Ext.ux.grid.LockingColumnModel({
+        columns: columns
+        , getCellEditor: function (colIndex, rowIndex) {
+            var rec = config.store.getAt(rowIndex);
+            var xt = {xtype: 'textfield'};
+            if (typeof(rec) === 'object') {
+                xt.xtype = rec.get('xtype');
+                if (xt === 'text-password') {
+                    xt.xtype = 'textfield';
+                    xt.inputType = 'password';
+                }
+            }
+            var o = MODx.load(xt);
+            return new Ext.grid.GridEditor(o);
+        }
+    });
+
     Ext.applyIf(config, {
         id: 'crosscontextssettings-grid-settings'
         , url: CrossContextsSettings.config.connectorUrl
         , baseParams: {
             action: 'mgr/settings/getvaluelist'
-            , columns: columns.toString()
+            , columns: fields.toString()
             , 'namespace': MODx.request['namespace'] ? MODx.request['namespace'] : 'core'
         }
-        , colModel: new Ext.ux.grid.LockingColumnModel(colModel)
-        , fields: columns
+        , colModel: cm
+        , fields: fields
         , paging: true
         , pageSize: 10
         , remoteSort: true
@@ -46,10 +68,16 @@ CrossContextsSettings.grid.Settings = function (config) {
         , save_action: 'mgr/settings/updatefromgrid'
         , autosave: true
         , tbar: [
-//            {
-//                text: _('setting_create')
-//            }, 
-            '->', {
+            {
+                text: _('setting_create')
+                , scope: this
+                , cls: 'primary-button'
+                , handler: {
+                    xtype: 'crosscontextssettings-window-setting-create'
+                    , blankValues: true
+                    , contexts: contexts
+                }
+            }, '->', {
                 xtype: 'modx-combo-namespace'
                 , name: 'namespace'
                 , id: 'modx-filter-namespace'
@@ -69,7 +97,7 @@ CrossContextsSettings.grid.Settings = function (config) {
                 , id: 'modx-filter-area'
                 , emptyText: _('area_filter')
                 , baseParams: {
-                    action: 'system/settings/getAreas'
+                    action: (MODx.version_is22 === 1 ? 'getAreas' : 'system/settings/getAreas')
                     , 'namespace': MODx.request['namespace'] ? MODx.request['namespace'] : 'core'
                 }
                 , width: 250
@@ -117,7 +145,30 @@ CrossContextsSettings.grid.Settings = function (config) {
     CrossContextsSettings.grid.Settings.superclass.constructor.call(this, config);
 };
 Ext.extend(CrossContextsSettings.grid.Settings, MODx.grid.Grid, {
-    clearFilter: function () {
+    getMenu: function () {
+        return [{
+                text: _('remove')
+                , handler: this.removeSetting
+            }];
+    }
+    , removeSetting: function (btn, e) {
+        MODx.msg.confirm({
+            title: _('remove'),
+            text: _('setting_remove_confirm'),
+            url: CrossContextsSettings.config.connectorUrl,
+            params: {
+                action: 'mgr/settings/remove',
+                key: this.menu.record.key
+            },
+            listeners: {
+                'success': {
+                    fn: this.refresh,
+                    scope: this
+                }
+            }
+        });
+    }
+    , clearFilter: function () {
         var ns = MODx.request['namespace'] ? MODx.request['namespace'] : 'core';
         var store = this.getStore();
         store.baseParams.namespace = ns;
@@ -160,5 +211,36 @@ Ext.extend(CrossContextsSettings.grid.Settings, MODx.grid.Grid, {
         this.getBottomToolbar().changePage(1);
         this.refresh();
     }
+    , renderDynField: function (v, md, rec, ri, ci, s, g) {
+        var r = s.getAt(ri).data;
+        v = Ext.util.Format.htmlEncode(v);
+        var f;
+        if (r.xtype == 'combo-boolean' || r.xtype == 'modx-combo-boolean') {
+            f = MODx.grid.Grid.prototype.rendYesNo;
+            return f(v, md, rec, ri, ci, s, g);
+        } else if (r.xtype === 'datefield') {
+            f = Ext.util.Format.dateRenderer(MODx.config.manager_date_format);
+            return f(v, md, rec, ri, ci, s, g);
+        } else if (r.xtype === 'text-password' || r.xtype == 'modx-text-password') {
+            f = MODx.grid.Grid.prototype.rendPassword;
+            return f(v, md, rec, ri, ci, s, g);
+        } else if (r.xtype.substr(0, 5) == 'combo' || r.xtype.substr(0, 10) == 'modx-combo') {
+            var cm = g.getColumnModel();
+            var ed = cm.getCellEditor(ci, ri);
+            if (!ed) {
+                var o = Ext.ComponentMgr.create({xtype: r.xtype || 'textfield'});
+                ed = new Ext.grid.GridEditor(o);
+                cm.setEditor(ci, ed);
+            }
+            if (ed.store && !ed.store.isLoaded && ed.config.mode != 'local') {
+                ed.store.load();
+                ed.store.isLoaded = true;
+            }
+            f = Ext.util.Format.comboRenderer(ed.field, v);
+            return f(v, md, rec, ri, ci, s, g);
+        }
+        return v;
+    }
+
 });
 Ext.reg('crosscontextssettings-grid-settings', CrossContextsSettings.grid.Settings);

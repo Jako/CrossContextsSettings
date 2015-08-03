@@ -1,4 +1,20 @@
-CrossContextsSettings 1.0.0-beta3 (March 28, 2015)
+CrossContextsSettings 1.0.2-pl (July 28, 2015)
+-------------------------------------------------------
+- [#9] added "Clear Cache" tab
+- [#8] fixed bug on 0 as value on "Create"
+- [#10] set correct input type for setting value
+
+CrossContextsSettings 1.0.1-pl (July 26, 2015)
+-------------------------------------------------------
+- [#8] fixed bug on 0 as value
+- [#8] ignored same value
+
+CrossContextsSettings 1.0.0-pl (July 25, 2015)
+-------------------------------------------------------
+- added delete setting
+- [#2] Wanted: new context setting button
+
+CrossContextsSettings 1.0.0-beta3 (July 03, 2015)
 -------------------------------------------------------
 - fixing pagination issue in MODX Revolution 2.3
 - reduced pagesize to 10 and adapted grid height to show the whole grid

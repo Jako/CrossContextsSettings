@@ -3,7 +3,7 @@
 /**
  * CrossContextsSettings
  *
- * Copyright 2014 by goldsky <goldsky@virtudraft.com>
+ * Copyright 2014-2015 by goldsky <goldsky@virtudraft.com>
  *
  * This file is part of CrossContextsSettings, a custom plugin to manage cross
  * contexts' settings
@@ -46,10 +46,12 @@ class SettingUpdateFromGridProcessor extends modObjectProcessor {
 
     public function process() {
         $props = $this->getProperties();
+
         foreach ($props as $k => $v) {
             if ($k === 'key' ||
                     $k === 'action' ||
-                    $k === 'menu'
+                    $k === 'menu' ||
+                    $k === 'xtype'
             ) {
                 continue;
             }
@@ -57,28 +59,41 @@ class SettingUpdateFromGridProcessor extends modObjectProcessor {
                 'key' => $props['key'],
                 'context_key' => $k,
             ));
-            if (!empty($v)) {
+            $v = trim($v);
+            if ($props['xtype'] === 'combo-boolean' && empty($v)) {
+                $v = 0;
+            }
+            if ($v !== '') {
                 if (!$setting) {
                     if (isset($props[$k])) {
                         $setting = $this->modx->newObject($this->classKey);
                         $setting->set('key', $props['key']);
                         $setting->set('context_key', $k);
-                        $setting->set('value', $props[$k]);
+                        $setting->set('value', $v);
+                        $setting->set('xtype', $props['xtype']);
                         if ($setting->save() === false) {
                             $message = $this->modx->lexicon('crosscontextssettings.err_setting_save', array('key' => $props['key'], 'context' => $k));
                             $this->modx->log(modX::LOG_LEVEL_ERROR, __METHOD__ . ' ');
                             $this->modx->log(modX::LOG_LEVEL_ERROR, __LINE__ . ': [CCS] ' . $message);
+                            continue;
                             return $this->failure($message);
                         }
                     }
                     continue;
                 }
-                $setting->set('value', $props[$k]);
+                if($setting->get('value') == $v) { //Skip saving same value
+                    continue;
+                }
+                $setting->set('value', $v);
                 if ($setting->save() === false) {
                     $message = $this->modx->lexicon('crosscontextssettings.err_setting_save', array('key' => $props['key'], 'context' => $k));
                     $this->modx->log(modX::LOG_LEVEL_ERROR, __METHOD__ . ' ');
                     $this->modx->log(modX::LOG_LEVEL_ERROR, __LINE__ . ': [CCS] ' . $message);
                     return $this->failure($message);
+                }
+            } else {
+                if ($setting) {
+                    $setting->remove();
                 }
             }
         }

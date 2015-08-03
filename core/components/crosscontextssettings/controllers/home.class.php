@@ -3,7 +3,7 @@
 /**
  * CrossContextsSettings
  *
- * Copyright 2014 by goldsky <goldsky@virtudraft.com>
+ * Copyright 2014-2015 by goldsky <goldsky@virtudraft.com>
  *
  * This file is part of CrossContextsSettings, a custom plugin to manage cross
  * contexts' settings
@@ -28,7 +28,7 @@
 class CrossContextsSettingsHomeManagerController extends CrossContextsSettingsManagerController {
 
     public function process(array $scriptProperties = array()) {
-        
+
     }
 
     public function getPageTitle() {
@@ -37,12 +37,17 @@ class CrossContextsSettingsHomeManagerController extends CrossContextsSettingsMa
 
     public function loadCustomCssJs() {
         $this->addCss($this->crosscontextssettings->config['jsUrl'] . 'ux/LockingGridView/LockingGridView.css');
-        $this->addJavascript($this->modx->config['manager_url'] . 'assets/modext/widgets/core/modx.combo.js');
         $this->addJavascript($this->modx->config['manager_url'] . 'assets/modext/widgets/core/modx.grid.settings.js');
         $this->addJavascript($this->crosscontextssettings->config['jsUrl'] . 'ux/LockingGridView/LockingGridView.js');
+        $this->addJavascript($this->crosscontextssettings->config['jsUrl'] . 'mgr/widgets/window.setting.create.js');
         $this->addJavascript($this->crosscontextssettings->config['jsUrl'] . 'mgr/widgets/grid.settings.js');
+        $this->addJavascript($this->crosscontextssettings->config['jsUrl'] . 'mgr/widgets/panel.clearcache.js');
         $this->addJavascript($this->crosscontextssettings->config['jsUrl'] . 'mgr/widgets/panel.home.js');
         $this->addLastJavascript($this->crosscontextssettings->config['jsUrl'] . 'mgr/sections/index.js');
+        $this->addHtml('
+            <script type="text/javascript">
+                MODx.version_is22 = ' . version_compare('2.2.100', $this->modx->getOption('settings_version')) . '
+            </script>');
     }
 
     public function getTemplateFile() {
