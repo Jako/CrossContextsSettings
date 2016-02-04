@@ -1,3 +1,8 @@
+CrossContextsSettings 1.0.5-pl (January 22, 2016)
+-------------------------------------------------------
+- added namespace and area to the grid
+- [#13]  Pagination not working, 1.0.3
+
 CrossContextsSettings 1.0.4-pl (January 18, 2016)
 -------------------------------------------------------
 - [#14] Fixed grid for context's name beyond [w]eb
