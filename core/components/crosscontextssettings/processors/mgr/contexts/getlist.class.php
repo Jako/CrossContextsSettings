@@ -1,59 +1,86 @@
 <?php
-
 /**
- * CrossContextsSettings
- *
- * Copyright 2014-2015 by goldsky <goldsky@virtudraft.com>
- *
- * This file is part of CrossContextsSettings, a custom plugin to manage cross
- * contexts' settings
- *
- * CrossContextsSettings is free software; you can redistribute it and/or modify it under the
- * terms of the GNU General Public License as published by the Free Software
- * Foundation version 3,
- *
- * CrossContextsSettings is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * CrossContextsSettings; if not, write to the Free Software Foundation, Inc., 59 Temple Place,
- * Suite 330, Boston, MA 02111-1307 USA
- *
- * CrossContextsSettings processor script
+ * Get contexts list processor for CrossContextsSettings
  *
  * @package crosscontextssettings
  * @subpackage processor
  */
-class CrossContextsSettingsContextsGetListProcessor extends modObjectGetListProcessor {
 
+class CrossContextsSettingsContextsGetListProcessor extends modObjectGetListProcessor
+{
     public $classKey = 'modContext';
     public $languageTopics = array('crosscontextssettings:default');
     public $defaultSortField = 'key';
     public $defaultSortDirection = 'ASC';
-    public $objectType = 'crosscontextssettings.contextsgetlist';
+    public $objectType = 'crosscontextssettings.contexts';
+
+    /** @var CrossContextsSettings $crosscontextssettings */
+    protected $crosscontextssettings;
 
     /**
-     * Can be used to adjust the query prior to the COUNT statement
-     *
+     * {@inheritDoc}
+     * @param modX $modx A reference to the modX instance
+     * @param array $properties An array of properties
+     */
+    function __construct(modX &$modx, array $properties = [])
+    {
+        parent::__construct($modx, $properties);
+
+        $corePath = $this->modx->getOption('crosscontextssettings.core_path', null, $this->modx->getOption('core_path') . 'components/crosscontextssettings/');
+        $this->crosscontextssettings =& $this->modx->getService('crosscontextssettings', 'CrossContextsSettings', $corePath . 'model/crosscontextssettings/');
+    }
+
+    /**
+     * {@inheritDoc}
+     * @return array
+     */
+    public function getData(): array
+    {
+        $data = array();
+
+        /* query for chunks */
+        $c = $this->modx->newQuery($this->classKey);
+        $c = $this->prepareQueryBeforeCount($c);
+        $data['total'] = $this->modx->getCount($this->classKey, $c);
+        $c = $this->prepareQueryAfterCount($c);
+
+        $sortClassKey = $this->getSortClassKey();
+        $sortKey = $this->modx->getSelectColumns($sortClassKey, $this->getProperty('sortAlias', $sortClassKey), '', array($this->getProperty('sort')));
+        if (empty($sortKey)) {
+            $sortKey = $this->getProperty('sort');
+        }
+        $c->sortby($sortKey, $this->getProperty('dir'));
+
+        $data['results'] = $this->modx->getCollection($this->classKey, $c);
+        return $data;
+    }
+
+    /**
+     * {@inheritDoc}
      * @param xPDOQuery $c
      * @return xPDOQuery
      */
-    public function prepareQueryBeforeCount(xPDOQuery $c) {
+    public function prepareQueryBeforeCount(xPDOQuery $c): xPDOQuery
+    {
         $c->where(array(
-            'key:!=' => 'mgr'
+            $this->classKey . '.key:!=' => 'mgr'
         ));
+        if ($contexts = $this->crosscontextssettings->getOption('contexts')) {
+            $c->where(array($this->classKey . '.key:IN' => $contexts));
+        }
         return $c;
     }
 
     /**
-     * Just to make sure 'web' context is at the first column
+     * Make sure that 'web' context is at the first column if available
+     *
      * @param array $list
      * @return array
      */
-    public function afterIteration(array $list) {
+    public function afterIteration(array $list): array
+    {
         $newList = array();
-        $web = array();
+        $web = null;
         foreach ($list as $k => $v) {
             if ($v['key'] === 'web') {
                 $web = $v;
@@ -61,18 +88,12 @@ class CrossContextsSettingsContextsGetListProcessor extends modObjectGetListProc
             }
             $newList[] = $v;
         }
-        array_unshift($newList, $web);
+        if ($web) {
+            array_unshift($newList, $web);
+        }
 
         return $newList;
     }
-
-    public function outputArray(array $array, $count = false) {
-        if ($count === false) {
-            $count = count($array);
-        }
-        return '{"success":true,"total":"' . $count . '","results":' . $this->modx->toJSON($array) . '}';
-    }
-
 }
 
 return 'CrossContextsSettingsContextsGetListProcessor';

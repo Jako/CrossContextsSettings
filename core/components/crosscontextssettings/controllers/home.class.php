@@ -1,57 +1,98 @@
 <?php
-
 /**
- * CrossContextsSettings
- *
- * Copyright 2014-2015 by goldsky <goldsky@virtudraft.com>
- *
- * This file is part of CrossContextsSettings, a custom plugin to manage cross
- * contexts' settings
- *
- * CrossContextsSettings is free software; you can redistribute it and/or modify it under the
- * terms of the GNU General Public License as published by the Free Software
- * Foundation version 3,
- *
- * CrossContextsSettings is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * CrossContextsSettings; if not, write to the Free Software Foundation, Inc., 59 Temple Place,
- * Suite 330, Boston, MA 02111-1307 USA
- *
- * CrossContextsSettings controller script
+ * Home controller class for CrossContextsSettings
  *
  * @package crosscontextssettings
  * @subpackage controller
  */
-class CrossContextsSettingsHomeManagerController extends CrossContextsSettingsManagerController {
 
-    public function process(array $scriptProperties = array()) {
+/**
+ * Class CrossContextsSettingsHomeManagerController
+ */
+class CrossContextsSettingsHomeManagerController extends modExtraManagerController
+{
+    /** @var CrossContextsSettings $crosscontextssettings */
+    public $crosscontextssettings;
 
+    /**
+     * {@inheritDoc}
+     */
+    public function initialize()
+    {
+        $path = $this->modx->getOption('crosscontextssettings.core_path', null, $this->modx->getOption('core_path') . 'components/crosscontextssettings/');
+        $this->crosscontextssettings = $this->modx->getService('crosscontextssettings', 'CrossContextsSettings', $path . 'model/crosscontextssettings/', array(
+            'core_path' => $path
+        ));
+
+        parent::initialize();
     }
 
-    public function getPageTitle() {
+    /**
+     * {@inheritDoc}
+     */
+    public function loadCustomCssJs()
+    {
+        $assetsUrl = $this->crosscontextssettings->getOption('assetsUrl');
+        $jsUrl = $this->crosscontextssettings->getOption('jsUrl') . 'mgr/';
+        $jsSourceUrl = $assetsUrl . '../../../source/js/mgr/';
+        $cssUrl = $this->crosscontextssettings->getOption('cssUrl') . 'mgr/';
+        $cssSourceUrl = $assetsUrl . '../../../source/css/mgr/';
+
+        if ($this->crosscontextssettings->getOption('debug') && ($assetsUrl != MODX_ASSETS_URL . 'components/crosscontextssettings/')) {
+            $this->addCss($jsSourceUrl . 'ux/LockingGridView/LockingGridView.css?v=v' . $this->crosscontextssettings->version);
+            $this->addCss($cssSourceUrl . 'crosscontextssettings.css?v=v' . $this->crosscontextssettings->version);
+            $this->addJavascript($jsSourceUrl . 'crosscontextssettings.js?v=v' . $this->crosscontextssettings->version);
+            $this->addJavascript($jsSourceUrl . 'widgets/contextsettings.grid.js?v=v' . $this->crosscontextssettings->version);
+            $this->addJavascript($jsSourceUrl . 'widgets/clearcache.panel.js?v=v' . $this->crosscontextssettings->version);
+            $this->addJavascript($jsSourceUrl . 'widgets/home.panel.js?v=v' . $this->crosscontextssettings->version);
+            $this->addJavascript(MODX_MANAGER_URL . 'assets/modext/widgets/core/modx.grid.settings.js?v=v' . $this->crosscontextssettings->version);
+            $this->addJavascript($jsSourceUrl . 'ux/LockingGridView/LockingGridView.js?v=v' . $this->crosscontextssettings->version);
+            $this->addJavascript($jsSourceUrl . 'widgets/settings.panel.js?v=v' . $this->crosscontextssettings->version);
+            $this->addLastJavascript($jsSourceUrl . 'sections/home.js?v=v' . $this->crosscontextssettings->version);
+        } else {
+            $this->addCss($cssUrl . 'crosscontextssettings.min.css?v=v' . $this->crosscontextssettings->version);
+            $this->addJavascript(MODX_MANAGER_URL . 'assets/modext/widgets/core/modx.grid.settings.js');
+            $this->addLastJavascript($jsUrl . 'crosscontextssettings.min.js?v=v' . $this->crosscontextssettings->version);
+        }
+        $this->addHtml('<script type="text/javascript">
+        Ext.onReady(function() {
+            CrossContextsSettings.config = ' . json_encode($this->crosscontextssettings->options, JSON_PRETTY_PRINT) . ';
+        });
+        </script>');
+    }
+
+    /**
+     * {@inheritDoc}
+     * @return string[]
+     */
+    public function getLanguageTopics(): array
+    {
+        return array('core:setting', 'crosscontextssettings:default');
+    }
+
+    /**
+     * {@inheritDoc}
+     * @param array $scriptProperties
+     */
+    public function process(array $scriptProperties = array())
+    {
+    }
+
+    /**
+     * {@inheritDoc}
+     * @return string|null
+     */
+    public function getPageTitle(): ?string
+    {
         return $this->modx->lexicon('crosscontextssettings');
     }
 
-    public function loadCustomCssJs() {
-        $this->addCss($this->crosscontextssettings->config['jsUrl'] . 'ux/LockingGridView/LockingGridView.css');
-        $this->addJavascript($this->modx->config['manager_url'] . 'assets/modext/widgets/core/modx.grid.settings.js');
-        $this->addJavascript($this->crosscontextssettings->config['jsUrl'] . 'ux/LockingGridView/LockingGridView.js');
-        $this->addJavascript($this->crosscontextssettings->config['jsUrl'] . 'mgr/widgets/window.setting.create.js');
-        $this->addJavascript($this->crosscontextssettings->config['jsUrl'] . 'mgr/widgets/grid.settings.js');
-        $this->addJavascript($this->crosscontextssettings->config['jsUrl'] . 'mgr/widgets/panel.clearcache.js');
-        $this->addJavascript($this->crosscontextssettings->config['jsUrl'] . 'mgr/widgets/panel.home.js');
-        $this->addLastJavascript($this->crosscontextssettings->config['jsUrl'] . 'mgr/sections/index.js');
-        $this->addHtml('
-            <script type="text/javascript">
-                MODx.version_is22 = ' . version_compare('2.2.100', $this->modx->getOption('settings_version')) . '
-            </script>');
+    /**
+     * {@inheritDoc}
+     * @return string
+     */
+    public function getTemplateFile(): string
+    {
+        return $this->crosscontextssettings->getOption('templatesPath') . 'home.tpl';
     }
-
-    public function getTemplateFile() {
-        return $this->crosscontextssettings->config['templatesPath'] . 'home.tpl';
-    }
-
 }
