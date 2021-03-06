@@ -1,0 +1,60 @@
+{
+  "name": "CrossContextsSettings",
+  "lowCaseName": "crosscontextssettings",
+  "description": "Manage the settings of different contexts in one place",
+  "author": "Rico Goldsky, Thomas Jakobi",
+  "version": "1.1.1",
+  "package": {
+    "menus": [
+      {
+        "text": "crosscontextssettings.menu",
+        "description": "crosscontextssettings.menu_desc",
+        "action": "home",
+        "parent": "components"
+      }
+    ],
+    "systemSettings": [
+      {
+        "key": "debug",
+        "type": "combo-boolean",
+        "area": "system",
+        "value": "0"
+      },
+      {
+        "key": "contexts",
+        "area": "system",
+        "value": ""
+      },
+      {
+        "key": "clear_cache",
+        "type": "combo-boolean",
+        "area": "system",
+        "value": "0"
+      }
+    ]
+  },
+  "dependencies": [
+    {
+      "name": "php",
+      "version": ">=5.6"
+    },
+    {
+      "name": "modx",
+      "version": ">=2.7"
+    }
+  ],
+  "build": {
+    "readme": "docs/readme.md",
+    "license": "docs/license.md",
+    "changelog": "docs/changelog.md",
+    "setupOptions": {
+      "source": "setup.options.php"
+    },
+    "resolver": {
+      "after": [
+        "resolve.update.php",
+        "resolve.treehillstudio.php"
+      ]
+    }
+  }
+}

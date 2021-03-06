@@ -30,7 +30,7 @@ class CrossContextsSettings
      * The version
      * @var string $version
      */
-    public $version = '1.1.0';
+    public $version = '1.1.1';
 
     /**
      * The class options
