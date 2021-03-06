@@ -44,7 +44,7 @@ if ($object->xpdo) {
                 }
             }
             if ($countFolders || $countFiles) {
-                $modx->log(xPDO::LOG_LEVEL_INFO, 'Removed ' . $countFiles . ' legacy files and ' . $countFolders . ' legacy folders of TinyMCE 1.x');
+                $modx->log(xPDO::LOG_LEVEL_INFO, 'Removed ' . $countFiles . ' legacy files and ' . $countFolders . ' legacy folders of CrossContextsSettings 1.0.x');
             }
         }
     }
@@ -93,7 +93,7 @@ if ($object->xpdo) {
             $c->where([
                 [
                     'modTransportPackage.package_name' => 'crosscontextssettings',
-                    'OR:modTransportPackage.package_name:=' => 'TinyMCE Rich Text Editor',
+                    'OR:modTransportPackage.package_name:=' => 'CrossContextsSettings',
                 ],
                 'installed:IS NOT' => null
             ]);
