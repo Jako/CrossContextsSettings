@@ -1,13 +1,9 @@
-Ext.onReady(function () {
-    MODx.load({xtype: 'crosscontextssettings-page-home'});
-});
-
 CrossContextsSettings.page.Home = function (config) {
     config = config || {};
     Ext.applyIf(config, {
+        formpanel: 'crosscontextssettings-panel-home',
         components: [{
-            xtype: 'crosscontextssettings-panel-home',
-            renderTo: 'crosscontextssettings-panel-home'
+            xtype: 'crosscontextssettings-panel-home'
         }]
     });
     CrossContextsSettings.page.Home.superclass.constructor.call(this, config);
