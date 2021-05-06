@@ -1,4 +1,4 @@
-[![Weblate](https://hosted.weblate.org/widgets/modx-crosscontextssettings/-/svg-badge.svg)](https://hosted.weblate.org/engage/modx-crosscontextssettings/)
+[![Default Lexicon](https://hosted.weblate.org/widgets/modx-extras/-/modx-crosscontextssettings-standard/svg-badge.svg)](https://hosted.weblate.org/projects/modx-extras/modx-crosscontextssettings-standard/)
 
 # CrossContextsSettings
 
@@ -24,4 +24,4 @@ The project is licensed under the [GPLv2 license](https://github.com/Jako/CrossC
 
 ## Translations
 
-The project can be translated on [Weblate](https://hosted.weblate.org/engage/modx-crosscontextssettings/).
+Translations of the package can be made for the [Default Lexicon](https://hosted.weblate.org/projects/modx-extras/modx-crosscontextssettings-standard/) and the [System Setting Lexicon](https://hosted.weblate.org/projects/modx-extras/modx-crosscontextssettings-system-settings/)
