@@ -56,7 +56,7 @@ class CrossContextsSettingsHomeManagerController extends modExtraManagerControll
         }
         $this->addHtml('<script type="text/javascript">
         Ext.onReady(function() {
-            CrossContextsSettings.config = ' . json_encode($this->crosscontextssettings->options, JSON_PRETTY_PRINT) . ';
+            CrossContextsSettings.config = ' . json_encode($this->crosscontextssettings->options, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . ';
         });
         </script>');
     }
