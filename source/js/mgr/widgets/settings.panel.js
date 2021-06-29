@@ -1,5 +1,6 @@
 CrossContextsSettings.panel.Settings = function (config) {
     config = config || {};
+    MODx.request.ns = 'crosscontextssettings';
     Ext.applyIf(config, {
         id: 'crosscontextssettings-panel-settings',
         title: _('crosscontextssettings.settings'),
