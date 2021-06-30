@@ -5,7 +5,6 @@
  * @package crosscontextssettings
  * @subpackage lexicon
  */
-
 $_lang['setting_crosscontextssettings.clear_cache'] = 'Clear Context Cache';
 $_lang['setting_crosscontextssettings.clear_cache_desc'] = 'Clear the context cache after modifying an entry.';
 $_lang['setting_crosscontextssettings.contexts'] = 'Contexts';

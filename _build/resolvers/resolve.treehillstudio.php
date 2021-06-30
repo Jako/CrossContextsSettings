@@ -2,7 +2,7 @@
 /**
  * Resolves install statistics
  *
- * @package consentfriend
+ * @package crosscontextssettings
  * @subpackage build
  *
  * @var mixed $object
