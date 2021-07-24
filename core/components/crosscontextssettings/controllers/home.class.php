@@ -65,7 +65,7 @@ class CrossContextsSettingsHomeManagerController extends modExtraManagerControll
      * {@inheritDoc}
      * @return string[]
      */
-    public function getLanguageTopics(): array
+    public function getLanguageTopics()
     {
         return array('core:setting', 'crosscontextssettings:default');
     }
@@ -82,7 +82,7 @@ class CrossContextsSettingsHomeManagerController extends modExtraManagerControll
      * {@inheritDoc}
      * @return string|null
      */
-    public function getPageTitle(): ?string
+    public function getPageTitle()
     {
         return $this->modx->lexicon('crosscontextssettings');
     }
@@ -91,7 +91,7 @@ class CrossContextsSettingsHomeManagerController extends modExtraManagerControll
      * {@inheritDoc}
      * @return string
      */
-    public function getTemplateFile(): string
+    public function getTemplateFile()
     {
         return $this->crosscontextssettings->getOption('templatesPath') . 'home.tpl';
     }
