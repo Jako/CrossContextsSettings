@@ -22,9 +22,9 @@ CrossContextsSettings.panel.Home = function (config) {
         }, {
             cls: "treehillstudio_about",
             html:
-                '<img width="133" height="40" src="' + CrossContextsSettings.config.assetsUrl + 'img/mgr/virtudraft-small.png"' + ' srcset="' + CrossContextsSettings.config.assetsUrl + 'img/mgr/virtudraft-small@2x.png 2x" alt="virtudraft">' +
+                '<img width="146" height="40" src="' + CrossContextsSettings.config.assetsUrl + 'img/mgr/virtudraft-small.png"' + ' srcset="' + CrossContextsSettings.config.assetsUrl + 'img/mgr/virtudraft-small@2x.png 2x" alt="virtudraft">' +
                 '<span style="line-height: 40px;height: 40px;display: inline-block;vertical-align: top;margin: 0 10px;">+</span>' +
-                '<img width="133" height="40" src="' + CrossContextsSettings.config.assetsUrl + 'img/mgr/treehill-studio-small.png"' + ' srcset="' + CrossContextsSettings.config.assetsUrl + 'img/mgr/treehill-studio-small@2x.png 2x" alt="Treehill Studio">',
+                '<img width="146" height="40" src="' + CrossContextsSettings.config.assetsUrl + 'img/mgr/treehill-studio-small.png"' + ' srcset="' + CrossContextsSettings.config.assetsUrl + 'img/mgr/treehill-studio-small@2x.png 2x" alt="Treehill Studio">',
             listeners: {
                 afterrender: function (component) {
                     component.getEl().select('img').on('click', function () {
@@ -38,7 +38,7 @@ CrossContextsSettings.panel.Home = function (config) {
                             msg: msg,
                             buttons: Ext.Msg.OK,
                             cls: 'treehillstudio_window',
-                            width: 330
+                            width: 358
                         });
                     });
                 }
