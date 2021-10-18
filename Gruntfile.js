@@ -184,8 +184,8 @@ module.exports = function (grunt) {
                 }],
                 options: {
                     replacements: [{
-                        pattern: /&copy; 2021(-\d{4})?/g,
-                        replacement: '&copy; ' + (new Date().getFullYear() > 2021 ? '2021-' : '') + new Date().getFullYear()
+                        pattern: / 2021(-\d{4})?/g,
+                        replacement: ' ' + (new Date().getFullYear() > 2021 ? '2021-' : '') + new Date().getFullYear()
                     }]
                 }
             }
