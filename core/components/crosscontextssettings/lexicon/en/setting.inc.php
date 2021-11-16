@@ -10,4 +10,4 @@ $_lang['setting_crosscontextssettings.clear_cache_desc'] = 'Clear the context ca
 $_lang['setting_crosscontextssettings.contexts'] = 'Contexts';
 $_lang['setting_crosscontextssettings.contexts_desc'] = 'Comma separated list of contexts displayed in the custom manager page. No value means that all contexts are displayed.';
 $_lang['setting_crosscontextssettings.debug'] = 'Debug';
-$_lang['setting_crosscontextssettings.debug_desc'] = 'Log debug informations in MODX error log.';
+$_lang['setting_crosscontextssettings.debug_desc'] = 'Log debug information in the MODX error log.';
