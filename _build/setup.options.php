@@ -21,7 +21,7 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         $output .= '<h2>Install CrossContextsSettings</h2>
 
         <p>Thanks for installing CrossContextsSettings. This open source extra
-        was developped by virtudraft and is maintained by Treehill Studio - MODX
+        was developed by virtudraft and is maintained by Treehill Studio - MODX
         development in Münsterland.</p>
 
         <p>During the installation, we will collect some statistical data (the
@@ -38,7 +38,7 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         $output .= '<h2>Upgrade CrossContextsSettings</h2>
 
         <p>CrossContextsSettings will be upgraded. This open source extra was
-        developped by virtudraft and is maintained by Treehill Studio - MODX
+        developed by virtudraft and is maintained by Treehill Studio - MODX
         development in Münsterland.</p>
 
         During the upgrade, we will collect some statistical data (the hostname,
