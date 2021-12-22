@@ -41,7 +41,7 @@ CrossContextsSettings.
 
 [![](img/crosscontextssettings-settings.png)](img/crosscontextssettings-settings.png)
 
-The following system settings are available:
+CrossContextsSettings uses the following system settings in the namespace `crosscontextssettings`:
 
 Key | Description
 ----|------------
