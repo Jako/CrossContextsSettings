@@ -3,7 +3,7 @@
  * CrossContextsSettings
  *
  * Copyright 2014-2020 by goldsky <goldsky@virtudraft.com>
- * Copyright 2021 by Thomas Jakobi <thomas.jakobi@partout.info>
+ * Copyright 2021 by Thomas Jakobi <office@treehillstudio.com>
  *
  * @package crosscontextssettings
  * @subpackage build
