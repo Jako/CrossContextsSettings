@@ -1,6 +1,5 @@
 CrossContextsSettings.panel.Settings = function (config) {
     config = config || {};
-    MODx.request.ns = 'crosscontextssettings';
     Ext.applyIf(config, {
         id: 'crosscontextssettings-panel-settings',
         title: _('crosscontextssettings.settings'),
@@ -22,12 +21,17 @@ Ext.reg('crosscontextssettings-panel-settings', CrossContextsSettings.panel.Sett
 
 CrossContextsSettings.grid.SystemSettings = function (config) {
     config = config || {};
-    config.baseParams = {
-        action: 'system/settings/getList',
-        namespace: 'crosscontextssettings',
-        area: MODx.request['area']
-    };
-    config.tbar = [];
+    Ext.applyIf(config, {
+        id: 'crosscontextssettings-grid-systemsettings',
+        url: CrossContextsSettings.config.connectorUrl,
+        baseParams: {
+            action: 'mgr/settings/getlist',
+            area: MODx.request.area || ''
+        },
+        save_action: 'mgr/settings/updatefromgrid',
+        tbar: [],
+        queryParam: (CrossContextsSettings.config.modxversion >= 3) ? 'query' : 'key'
+    });
     CrossContextsSettings.grid.SystemSettings.superclass.constructor.call(this, config);
 };
 Ext.extend(CrossContextsSettings.grid.SystemSettings, MODx.grid.SettingsGrid, {
@@ -76,36 +80,29 @@ Ext.extend(CrossContextsSettings.grid.SystemSettings, MODx.grid.SettingsGrid, {
         uss.show(e.target);
     },
     clearFilter: function () {
-        var ns = 'crosscontextssettings';
-        var area = MODx.request['area'] ? MODx.request['area'] : '';
+        var area = MODx.request.area || '';
         this.getStore().baseParams = this.initialConfig.baseParams;
         var acb = Ext.getCmp('modx-filter-area');
         if (acb) {
-            acb.store.baseParams['namespace'] = ns;
             acb.store.load();
             acb.reset();
         }
-        Ext.getCmp('modx-filter-namespace').setValue(ns);
-        Ext.getCmp('modx-filter-key').reset();
-        this.getStore().baseParams.namespace = ns;
+        Ext.getCmp('modx-filter-' + this.config.queryParam).reset();
         this.getStore().baseParams.area = area;
-        this.getStore().baseParams.key = '';
+        this.getStore().baseParams[this.config.queryParam] = '';
         this.getBottomToolbar().changePage(1);
     },
     filterByKey: function (tf, newValue) {
-        this.getStore().baseParams.key = newValue;
-        this.getStore().baseParams.namespace = 'crosscontextssettings';
+        this.getStore().baseParams[this.config.queryParam] = newValue;
         this.getBottomToolbar().changePage(1);
         return true;
     },
     filterByNamespace: function () {
-        this.getStore().baseParams['namespace'] = 'crosscontextssettings';
-        this.getStore().baseParams['area'] = '';
+        this.getStore().baseParams.area = '';
         this.getBottomToolbar().changePage(1);
         var acb = Ext.getCmp('modx-filter-area');
         if (acb) {
             var s = acb.store;
-            s.baseParams['namespace'] = 'crosscontextssettings';
             s.removeAll();
             s.load();
             acb.setValue('');

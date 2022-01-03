@@ -14,12 +14,12 @@ require_once MODX_CONNECTORS_PATH . 'index.php';
 
 $corePath = $modx->getOption('crosscontextssettings.core_path', null, $modx->getOption('core_path') . 'components/crosscontextssettings/');
 /** @var CrossContextsSettings $crosscontextssettings */
-$crosscontextssettings = $modx->getService('crosscontextssettings', 'CrossContextsSettings', $corePath . 'model/crosscontextssettings/', array(
+$crosscontextssettings = $modx->getService('crosscontextssettings', 'CrossContextsSettings', $corePath . 'model/crosscontextssettings/', [
     'core_path' => $corePath
-));
+]);
 
 // Handle request
-$modx->request->handleRequest(array(
+$modx->request->handleRequest([
     'processors_path' => $crosscontextssettings->getOption('processorsPath'),
     'location' => ''
-));
+]);

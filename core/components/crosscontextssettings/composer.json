@@ -1,0 +1,30 @@
+{
+  "name": "treehillstudio/crosscontextssettings",
+  "description": "Manage the settings of different contexts in one place",
+  "authors": [
+    {
+      "name": "Rico Goldsky",
+      "email": "goldsky@virtudraft.com",
+      "homepage": "https://github.com/virtudraft"
+    },
+    {
+      "name": "Thomas Jakobi",
+      "email": "office@treehillstudio.com",
+      "homepage": "https://treehillstudio.com"
+    }
+  ],
+  "license": "proprietary",
+  "config": {
+    "platform": {
+      "php": "7.2.5"
+    }
+  },
+  "require": {
+    "php": ">=7.2.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "TreehillStudio\\CrossContextsSettings\\": "src/"
+    }
+  }
+}

@@ -3,7 +3,7 @@
   "lowCaseName": "crosscontextssettings",
   "description": "Manage the settings of different contexts in one place",
   "author": "Rico Goldsky, Thomas Jakobi",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "package": {
     "menus": [
       {
@@ -36,7 +36,7 @@
   "dependencies": [
     {
       "name": "php",
-      "version": ">=5.6"
+      "version": ">=7.2"
     },
     {
       "name": "modx",
@@ -52,7 +52,7 @@
     },
     "resolver": {
       "after": [
-        "resolve.update.php",
+        "resolve.cleanup.php",
         "resolve.treehillstudio.php"
       ]
     }

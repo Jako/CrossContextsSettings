@@ -1,34 +1,19 @@
 <?php
 /**
- * Remove context setting processor for CrossContextsSettings
+ * Remove contexts setting
  *
  * @package crosscontextssettings
- * @subpackage processor
+ * @subpackage processors
  */
 
-class CrossContextsSettingsSettingsRemoveProcessor extends modProcessor
+use TreehillStudio\CrossContextsSettings\Processors\ObjectProcessor;
+
+class CrossContextsSettingsSettingsRemoveProcessor extends ObjectProcessor
 {
-    public $languageTopics = array('setting', 'namespace');
+    public $languageTopics = ['crosscontextssettings:default', 'setting'];
     public $permission = 'settings';
     public $objectType = 'setting';
     public $primaryKeyField = 'key';
-
-    protected $contexts = array();
-    /** @var CrossContextsSettings $crosscontextssettings */
-    protected $crosscontextssettings;
-
-    /**
-     * {@inheritDoc}
-     * @param modX $modx A reference to the modX instance
-     * @param array $properties An array of properties
-     */
-    function __construct(modX &$modx, array $properties = [])
-    {
-        parent::__construct($modx, $properties);
-
-        $corePath = $this->modx->getOption('crosscontextssettings.core_path', null, $this->modx->getOption('core_path') . 'components/crosscontextssettings/');
-        $this->crosscontextssettings = $this->modx->getService('crosscontextssettings', 'CrossContextsSettings', $corePath . 'model/crosscontextssettings/');
-    }
 
     /**
      * {@inheritDoc}
@@ -45,37 +30,37 @@ class CrossContextsSettingsSettingsRemoveProcessor extends modProcessor
 
     /**
      * {@inheritDoc}
-     * @return mixed
+     * @return array|string
      */
     public function process()
     {
         $props = $this->getProperties();
-        $contexts = array();
+        $contexts = [];
 
-        $contextSettings = $this->modx->getCollection('modContextSetting', array(
+        $contextSettings = $this->modx->getCollection('modContextSetting', [
             'key' => $this->getProperty($this->primaryKeyField)
-        ));
+        ]);
         if (!$contextSettings) {
             return $this->failure($this->modx->lexicon('setting_err_nf'));
         }
         foreach ($contextSettings as $setting) {
-            $result = $this->modx->runProcessor('context/setting/remove', array(
+            $result = $this->modx->runProcessor('context/setting/remove', [
                 'context_key' => $setting->get('context_key'),
                 'key' => $props['key'],
-            ));
+            ]);
             if ($result->isError()) {
                 $response = $result->getAllErrors();
-                return $this->failure(isset($response[0]) ? $response[0] : '');
+                return $this->failure($response[0] ?? '');
             }
             $contexts[$setting->get('context_key')] = 1;
         }
 
         if ($this->crosscontextssettings->getOption('clear_cache')) {
-            $this->modx->runProcessor('mgr/contexts/clearcache', array(
+            $this->modx->runProcessor('mgr/contexts/clearcache', [
                 'ctxs' => $contexts,
-            ), array(
+            ], [
                 'processors_path' => $this->crosscontextssettings->getOption('processorsPath')
-            ));
+            ]);
         }
 
         return $this->success();

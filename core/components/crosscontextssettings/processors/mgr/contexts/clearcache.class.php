@@ -1,18 +1,20 @@
 <?php
 /**
- * Clear cache processor for CrossContextsSettings
+ * Clear cache
  *
  * @package crosscontextssettings
- * @subpackage processor
+ * @subpackage processors
  */
 
-class CrossContextsSettingsContextsClearCacheProcessor extends modProcessor
+use TreehillStudio\CrossContextsSettings\Processors\ObjectProcessor;
+
+class CrossContextsSettingsContextsClearCacheProcessor extends ObjectProcessor
 {
-    public $objectType = 'crosscontextssettings.context';
-    public $languageTopics = array('setting', 'namespace');
     public $permission = 'settings';
+    public $objectType = 'context';
 
     /**
+     * {@inheritDoc}
      * @return bool|string
      */
     public function initialize()
@@ -36,27 +38,29 @@ class CrossContextsSettingsContextsClearCacheProcessor extends modProcessor
     }
 
     /**
+     * {@inheritDoc}
      * @return mixed
      */
     public function process()
     {
         $ctxs = $this->getProperty('ctxs', false);
-        $contexts = array();
+        $contexts = [];
+
         foreach ($ctxs as $ctx => $val) {
             if ($val == '1') {
                 $contexts[] = $ctx;
             }
         }
         if (!empty($contexts)) {
-            if (!$this->modx->cacheManager->refresh(array(
-                'auto_publish' => array('contexts' => array_diff($contexts, array('mgr'))),
-                'system_settings' => array(),
-                'context_settings' => array('contexts' => $contexts),
-                'lexicon_topics' => array(),
-                'resource' => array('contexts' => array_diff($contexts, array('mgr'))),
-                'menu' => array(),
-                'action_map' => array()
-            ))) {
+            if (!$this->modx->cacheManager->refresh([
+                'auto_publish' => ['contexts' => array_diff($contexts, ['mgr'])],
+                'system_settings' => [],
+                'context_settings' => ['contexts' => $contexts],
+                'lexicon_topics' => [],
+                'resource' => ['contexts' => array_diff($contexts, ['mgr'])],
+                'menu' => [],
+                'action_map' => []
+            ])) {
                 return $this->failure();
             }
         }

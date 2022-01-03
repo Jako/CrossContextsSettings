@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2022-01-04
+
+### Added
+
+- Allow row editing in a modal window
+- Use the xtype while editing in the modal window
+- Actionbuttons in the grid
+
+### Changed
+
+- Code refactoring
+- Full MODX 3 compatibility
+
+### Fixed
+
+- Resize issues with the locking grid
+
 ## [1.1.1] - 2021-03-06
 
 ### Added
@@ -22,10 +39,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Remove modAction usage
 - Don't save the context_key and the area in updatefromgrid processor [#19]
-- Fix ONLY_FULL_GROUP_BY issue [#22]
 - Remove limit from Contexts [#23]
-- Fix overflow scroll issue [#18]
 - List the contexts of all namespaces by default [#15]
+
+### Fixed
+
+- ONLY_FULL_GROUP_BY issue [#22]
+- Overflow scroll issue [#18]
+
 
 ## [1.0.5] - 2016-01-22
 
@@ -33,15 +54,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Namespace and area columns in the grid
 
-### Changed
+### Fixed
 
-- Fix pagination not working [#13]
+- Pagination not working [#13]
 
 ## [1.0.4] - 2016-01-18
 
-### Changed
+### Fixed
 
-- Fixed grid for context's name beyond [w]eb [#14]
+- Grid for context's name beyond [w]eb [#14]
 
 ## [1.0.3] - 2015-08-05
 
@@ -55,17 +76,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - "Clear Cache" tab [#9]
 
-### Changed
+### Fixed
 
-- Fixed bug on 0 as value on "Create" [#8]
+- Bug on 0 as value during "Create" [#8]
 - Set correct input type for setting value [#10]
 
 ## [1.0.1] - 2015-07-26
 
 ### Changed
 
-- Fixed bug on 0 as value [#8]
 - Ignored same value [#8]
+
+### Fixed
+
+- Bug on 0 as value [#8]
 
 ## [1.0.0] - 2015-07-25
 

@@ -33,10 +33,10 @@ CrossContextsSettings.panel.ClearCache = function (config) {
 };
 Ext.extend(CrossContextsSettings.panel.ClearCache, MODx.FormPanel, {
     setup: function () {
-        var record = this.config.record || {};
-        if (typeof (record) === 'object') {
+        var contexts = this.config.contexts || {};
+        if (typeof (contexts) === 'object') {
             var _this = this;
-            Ext.each(record, function (item) {
+            Ext.each(contexts, function (item) {
                 _this.add({
                     xtype: 'xcheckbox',
                     boxLabel: item.name || item.key,
@@ -44,7 +44,7 @@ Ext.extend(CrossContextsSettings.panel.ClearCache, MODx.FormPanel, {
                 });
             });
             _this.doLayout();
-            delete (this.config.record);
+            delete (this.config.contexts);
         }
     },
     success: function (o) {
@@ -56,4 +56,4 @@ Ext.extend(CrossContextsSettings.panel.ClearCache, MODx.FormPanel, {
         });
     }
 });
-Ext.reg('crosscontextssettings-clearcache-panel', CrossContextsSettings.panel.ClearCache);
+Ext.reg('crosscontextssettings-panel-clearcache', CrossContextsSettings.panel.ClearCache);

@@ -20,9 +20,9 @@ class CrossContextsSettingsHomeManagerController extends modExtraManagerControll
     public function initialize()
     {
         $path = $this->modx->getOption('crosscontextssettings.core_path', null, $this->modx->getOption('core_path') . 'components/crosscontextssettings/');
-        $this->crosscontextssettings = $this->modx->getService('crosscontextssettings', 'CrossContextsSettings', $path . 'model/crosscontextssettings/', array(
+        $this->crosscontextssettings = $this->modx->getService('crosscontextssettings', 'CrossContextsSettings', $path . 'model/crosscontextssettings/', [
             'core_path' => $path
-        ));
+        ]);
 
         parent::initialize();
     }
@@ -42,7 +42,7 @@ class CrossContextsSettingsHomeManagerController extends modExtraManagerControll
             $this->addCss($jsSourceUrl . 'ux/LockingGridView/LockingGridView.css?v=v' . $this->crosscontextssettings->version);
             $this->addCss($cssSourceUrl . 'crosscontextssettings.css?v=v' . $this->crosscontextssettings->version);
             $this->addJavascript($jsSourceUrl . 'crosscontextssettings.js?v=v' . $this->crosscontextssettings->version);
-            $this->addJavascript($jsSourceUrl . 'widgets/contextsettings.grid.js?v=v' . $this->crosscontextssettings->version);
+            $this->addJavascript($jsSourceUrl . 'widgets/contextssettings.grid.js?v=v' . $this->crosscontextssettings->version);
             $this->addJavascript($jsSourceUrl . 'widgets/clearcache.panel.js?v=v' . $this->crosscontextssettings->version);
             $this->addJavascript($jsSourceUrl . 'widgets/home.panel.js?v=v' . $this->crosscontextssettings->version);
             $this->addJavascript(MODX_MANAGER_URL . 'assets/modext/widgets/core/modx.grid.settings.js?v=v' . $this->crosscontextssettings->version);
@@ -57,7 +57,8 @@ class CrossContextsSettingsHomeManagerController extends modExtraManagerControll
         $this->addHtml('<script type="text/javascript">
         Ext.onReady(function() {
             CrossContextsSettings.config = ' . json_encode($this->crosscontextssettings->options, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . ';
-        });
+            MODx.load({xtype: "crosscontextssettings-page-home"});
+       });
         </script>');
     }
 
@@ -67,14 +68,14 @@ class CrossContextsSettingsHomeManagerController extends modExtraManagerControll
      */
     public function getLanguageTopics()
     {
-        return array('core:setting', 'crosscontextssettings:default');
+        return ['core:setting', 'crosscontextssettings:default'];
     }
 
     /**
      * {@inheritDoc}
      * @param array $scriptProperties
      */
-    public function process(array $scriptProperties = array())
+    public function process(array $scriptProperties = [])
     {
     }
 

@@ -1,34 +1,21 @@
 <?php
 /**
- * Create context setting processor for CrossContextsSettings
+ * Create contexts setting
  *
  * @package crosscontextssettings
- * @subpackage processor
+ * @subpackage processors
  */
 
-class CrossContextsSettingsSettingsCreateProcessor extends modProcessor
+use TreehillStudio\CrossContextsSettings\Processors\ObjectProcessor;
+
+class CrossContextsSettingsSettingsCreateProcessor extends ObjectProcessor
 {
-    public $languageTopics = array('setting', 'namespace');
+    public $languageTopics = ['crosscontextssettings:default', 'setting'];
     public $permission = 'settings';
     public $objectType = 'setting';
     public $primaryKeyField = 'key';
 
-    protected $contexts = array();
-    /** @var CrossContextsSettings $crosscontextssettings */
-    protected $crosscontextssettings;
-
-    /**
-     * {@inheritDoc}
-     * @param modX $modx A reference to the modX instance
-     * @param array $properties An array of properties
-     */
-    function __construct(modX &$modx, array $properties = [])
-    {
-        parent::__construct($modx, $properties);
-
-        $corePath = $this->modx->getOption('crosscontextssettings.core_path', null, $this->modx->getOption('core_path') . 'components/crosscontextssettings/');
-        $this->crosscontextssettings = $this->modx->getService('crosscontextssettings', 'CrossContextsSettings', $corePath . 'model/crosscontextssettings/');
-    }
+    protected $contexts = [];
 
     /**
      * {@inheritDoc}
@@ -60,24 +47,24 @@ class CrossContextsSettingsSettingsCreateProcessor extends modProcessor
      */
     public function process()
     {
-        $props = $this->getProperties();
-        $contexts = array();
+        $properties = $this->getProperties();
+        $contexts = [];
 
         foreach ($this->contexts as $fk) {
-            $value = trim($props['value'][$fk]);
+            $value = trim($properties['value'][$fk]);
             if ($value === '') {
                 continue;
             }
-            $result = $this->modx->runProcessor('context/setting/create', array(
+            $result = $this->modx->runProcessor('context/setting/create', [
                 'fk' => $fk,
-                'key' => $props['key'],
-                'name' => $props['name'],
-                'description' => $props['description'],
-                'namespace' => $props['namespace'],
-                'xtype' => $props['xtype'],
-                'area' => $props['area'],
+                'key' => $properties['key'],
+                'name' => $properties['name'],
+                'description' => $properties['description'],
+                'namespace' => $properties['namespace'],
+                'xtype' => $properties['xtype'],
+                'area' => $properties['area'],
                 'value' => $value,
-            ));
+            ]);
             if ($result->isError()) {
                 $response = $result->getAllErrors();
                 return $this->failure(isset($response[0]) ? $response[0] : '');
@@ -86,11 +73,11 @@ class CrossContextsSettingsSettingsCreateProcessor extends modProcessor
         }
 
         if ($this->crosscontextssettings->getOption('clear_cache')) {
-            $this->modx->runProcessor('mgr/contexts/clearcache', array(
+            $this->modx->runProcessor('mgr/contexts/clearcache', [
                 'ctxs' => $contexts,
-            ), array(
+            ], [
                 'processors_path' => $this->crosscontextssettings->getOption('processorsPath')
-            ));
+            ]);
         }
 
         return $this->success();
