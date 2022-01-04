@@ -47,7 +47,7 @@ if ($object->xpdo) {
                 }
             }
             if ($countFolders || $countFiles) {
-                $modx->log(xPDO::LOG_LEVEL_INFO, 'Removed ' . $countFiles . ' legacy files and ' . $countFolders . ' legacy folders of ' . $package . ' .' . $version);
+                $modx->log(xPDO::LOG_LEVEL_INFO, 'Removed ' . $countFiles . ' legacy files and ' . $countFolders . ' legacy folders before ' . $package . ' .' . $version);
             }
         }
     }
@@ -108,7 +108,7 @@ if ($object->xpdo) {
             $corePath = $modx->getOption('core_path', null, MODX_CORE_PATH);
             $assetsPath = $modx->getOption('assets_path', null, MODX_ASSETS_PATH);
 
-            if ($oldPackage && $oldPackage->compareVersion('1.1.0-pl', '>')) {
+            if ($oldPackage && $oldPackage->compareVersion('1.1.0', '>')) {
                 cleanupMenu($modx, 'crosscontextssettings', 'home');
                 $cleanup = [
                     'core' => [
@@ -125,7 +125,7 @@ if ($object->xpdo) {
                         'components/crosscontextssettings/js/mgr/crosscontextssettings.js',
                     ]
                 ];
-                cleanupFolders($modx, $corePath, $assetsPath, $cleanup, 'CrossContextsSettings', '1.0.x');
+                cleanupFolders($modx, $corePath, $assetsPath, $cleanup, 'CrossContextsSettings', '1.1.0');
             }
 
             if ($oldPackage && $oldPackage->compareVersion('1.2.0', '>')) {
@@ -134,7 +134,7 @@ if ($object->xpdo) {
                         'components/crosscontextssettings/processors/mgr/contexts/getlist.class.php'
                     ]
                 ];
-                cleanupFolders($modx, $corePath, $assetsPath, $cleanup, 'CrossContextsSettings', '1.1.x');
+                cleanupFolders($modx, $corePath, $assetsPath, $cleanup, 'CrossContextsSettings', '1.2.0');
             }
             $success = true;
             break;
