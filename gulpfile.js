@@ -19,6 +19,7 @@ const banner = '/*!\n' +
     ' * Version: <%= pkg.version %>\n' +
     ' * Build date: ' + format("yyyy-MM-dd", new Date()) + '\n' +
     ' */';
+const year = new Date().getFullYear();
 
 gulp.task('scripts-mgr', function () {
     return gulp.src([
@@ -72,7 +73,7 @@ gulp.task('bump-copyright', function () {
         'core/components/crosscontextssettings/model/crosscontextssettings/crosscontextssettings.class.php',
         'core/components/crosscontextssettings/src/CrossContextsSettings.php',
     ], {base: './'})
-        .pipe(replace(/Copyright 2021(-\d{4})? by/g, 'Copyright ' + (new Date().getFullYear() > 2021 ? '2021-' : '') + new Date().getFullYear() + ' by'))
+        .pipe(replace(/Copyright 2021(-\d{4})? by/g, 'Copyright ' + (year > 2021 ? '2021-' : '') + year + ' by'))
         .pipe(gulp.dest('.'));
 });
 gulp.task('bump-version', function () {
@@ -86,14 +87,14 @@ gulp.task('bump-homepanel', function () {
     return gulp.src([
         'source/js/mgr/widgets/home.panel.js',
     ], {base: './'})
-        .pipe(replace(/&copy; 2021(-\d{4})?/g, '&copy; ' + (new Date().getFullYear() > 2021 ? '2021-' : '') + new Date().getFullYear()))
+        .pipe(replace(/&copy; 2021(-\d{4})?/g, '&copy; ' + (year > 2021 ? '2021-' : '') + year))
         .pipe(gulp.dest('.'));
 });
 gulp.task('bump-docs', function () {
     return gulp.src([
         'mkdocs.yml',
     ], {base: './'})
-        .pipe(replace(/&copy; 2021(-\d{4})?/g, '&copy; ' + (new Date().getFullYear() > 2021 ? '2021-' : '') + new Date().getFullYear()))
+        .pipe(replace(/&copy; 2021(-\d{4})?/g, '&copy; ' + (year > 2021 ? '2021-' : '') + year))
         .pipe(gulp.dest('.'));
 });
 gulp.task('bump', gulp.series('bump-copyright', 'bump-version', 'bump-homepanel', 'bump-docs'));
@@ -104,7 +105,7 @@ gulp.task('watch', function () {
     gulp.watch(['./source/js/**/*.js'], gulp.series('scripts-mgr'));
     // Watch .scss files
     gulp.watch(['./source/scss/**/*.scss'], gulp.series('sass-mgr'));
-    // Watch .scss files
+    // Watch *.(png|jpg|gif|svg) files
     gulp.watch(['./source/img/**/*.(png|jpg|gif|svg)'], gulp.series('images-mgr'));
 });
 

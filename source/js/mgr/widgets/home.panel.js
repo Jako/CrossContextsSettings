@@ -25,8 +25,8 @@ CrossContextsSettings.panel.Home = function (config) {
                 '<span style="line-height: 40px;height: 40px;display: inline-block;vertical-align: top;margin: 0 10px;">+</span>' +
                 '<img width="146" height="40" src="' + CrossContextsSettings.config.assetsUrl + 'img/mgr/treehill-studio-small.png"' + ' srcset="' + CrossContextsSettings.config.assetsUrl + 'img/mgr/treehill-studio-small@2x.png 2x" alt="Treehill Studio">',
             listeners: {
-                afterrender: function (component) {
-                    component.getEl().select('img').on('click', function () {
+                afterrender: function () {
+                    this.getEl().select('img').on('click', function () {
                         var msg = '<span style="display: inline-block; text-align: center;">' +
                             '<img src="' + CrossContextsSettings.config.assetsUrl + 'img/mgr/virtudraft.png" srcset="' + CrossContextsSettings.config.assetsUrl + 'img/mgr/virtudraft@2x.png 2x" alt="virtudraft" style="margin-top: 10px"><br>' +
                             '&copy; 2014-2020 by Virtudraft <a href="https://github.com/virtudraft" target="_blank">github.com/virtudraft</a><br>' +
