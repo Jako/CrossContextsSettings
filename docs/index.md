@@ -6,8 +6,8 @@ settings of the contexts in a single view.
 
 ### Requirements
 
-* MODX Revolution 2.7.0+
-* PHP v5.6+
+* MODX Revolution 2.7+
+* PHP 7.2+
 
 ### Features
 
