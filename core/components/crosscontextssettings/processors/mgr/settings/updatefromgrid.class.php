@@ -17,7 +17,7 @@ class CrossContextsSettingsSystemSettingsUpdateFromGridProcessor extends CrossCo
     public function initialize() {
         $data = $this->getProperty('data');
         if (empty($data)) return $this->modx->lexicon('invalid_data');
-        $properties = $this->modx->fromJSON($data);
+        $properties = json_decode($data, true);
         $this->setProperties($properties);
         $this->unsetProperty('data');
 
