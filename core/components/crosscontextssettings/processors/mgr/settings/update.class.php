@@ -22,7 +22,7 @@ class CrossContextsSettingsSystemSettingsUpdateProcessor extends modSystemSettin
      * {@inheritDoc}
      * @return bool
      */
-    public function beforeSave(): bool
+    public function beforeSave()
     {
         $this->setProperty('namespace', 'crosscontextssettings');
         $this->checkForBooleanValue();
@@ -34,7 +34,7 @@ class CrossContextsSettingsSystemSettingsUpdateProcessor extends modSystemSettin
      * {@inheritDoc}
      * @return bool
      */
-    public function afterSave(): bool
+    public function afterSave()
     {
         $this->updateTranslations($this->getProperties());
         $this->clearCache();

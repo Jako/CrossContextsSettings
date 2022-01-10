@@ -23,7 +23,7 @@ class CrossContextsSettingsSystemSettingsGetlistProcessor extends modSystemSetti
      * {@inheritDoc}
      * @return array
      */
-    public function prepareCriteria(): array
+    public function prepareCriteria()
     {
         return ['namespace' => 'crosscontextssettings'];
     }

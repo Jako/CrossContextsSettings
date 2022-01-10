@@ -85,7 +85,7 @@ class CrossContextsSettingsSettingsGetListProcessor extends ObjectGetListProcess
      * @param xPDOObject $object
      * @return array
      */
-    public function prepareRow(xPDOObject $object): array
+    public function prepareRow(xPDOObject $object)
     {
         $objectArray = $object->toArray();
 
