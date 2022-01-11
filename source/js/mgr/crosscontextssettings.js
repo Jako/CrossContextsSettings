@@ -13,3 +13,5 @@ Ext.extend(crosscontextssettings, Ext.Component, {
 Ext.reg('crosscontextssettings', crosscontextssettings);
 
 CrossContextsSettings = new crosscontextssettings();
+
+MODx.config.help_url = 'https://jako.github.io/CrossContextsSettings/usage/';

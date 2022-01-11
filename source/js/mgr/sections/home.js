@@ -1,6 +1,10 @@
 CrossContextsSettings.page.Home = function (config) {
     config = config || {};
     Ext.applyIf(config, {
+        buttons: [{
+            text: _('help_ex'),
+            handler: MODx.loadHelpPane
+        }],
         formpanel: 'crosscontextssettings-panel-home',
         components: [{
             xtype: 'crosscontextssettings-panel-home'
