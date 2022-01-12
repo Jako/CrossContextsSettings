@@ -1,6 +1,6 @@
 <?php
 /**
- * Setting lexicon entries for CrossContextsSettings
+ * Setting Lexicon Entries for CrossContextsSettings
  *
  * @package crosscontextssettings
  * @subpackage lexicon
