@@ -50,7 +50,7 @@ class CrossContextsSettingsSettingsSettingsUpdateProcessor extends ObjectProcess
                         ]);
                         if ($setting->save() === false) {
                             $message = $this->modx->lexicon('crosscontextssettings.contextsetting_err_save', ['key' => $properties['key'], 'context' => $k]);
-                            $this->modx->log(modX::LOG_LEVEL_ERROR, $message, '', 'CrossContextsSettings');
+                            $this->modx->log(xPDO::LOG_LEVEL_ERROR, $message, '', 'CrossContextsSettings');
                             continue;
                         }
                         $contexts[$k] = 1;
@@ -64,7 +64,7 @@ class CrossContextsSettingsSettingsSettingsUpdateProcessor extends ObjectProcess
                 $setting->set('value', $v);
                 if ($setting->save() === false) {
                     $message = $this->modx->lexicon('crosscontextssettings.contextsetting_err_save', ['key' => $properties['key'], 'context' => $k]);
-                    $this->modx->log(modX::LOG_LEVEL_ERROR, $message, '', 'CrossContextsSettings');
+                    $this->modx->log(xPDO::LOG_LEVEL_ERROR, $message, '', 'CrossContextsSettings');
                     return $this->failure($message);
                 }
                 $contexts[$k] = 1;
