@@ -47,4 +47,4 @@ Key | Description
 ----|------------
 Clear Context Cache | Clear the context cache after modifying an entry.
 Contexts | Comma separated list of contexts displayed in the custom manager page. No value means that all contexts are displayed.
-Debug | Log debug informations in MODX error log.
+Debug | Log debug information in MODX error log.
