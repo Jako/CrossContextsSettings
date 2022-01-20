@@ -422,8 +422,7 @@ CrossContextsSettings.window.CreateUpdateContextsSetting = function (config) {
             border: false,
             style: 'padding-bottom: 15px',
             items: contextsSettings
-        }],
-        keys: []
+        }]
     });
     CrossContextsSettings.window.CreateUpdateContextsSetting.superclass.constructor.call(this, config);
     if (!config.isUpdate) {
