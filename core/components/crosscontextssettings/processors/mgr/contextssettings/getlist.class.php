@@ -75,7 +75,7 @@ class CrossContextsSettingsSettingsGetListProcessor extends ObjectGetListProcess
                 $this->classKey . '.key:LIKE' => '%' . $key . '%'
             ]);
         }
-        $c->groupby($this->classKey . '.key', 'asc');
+        $c->groupby($this->classKey . '.key');
 
         return $c;
     }

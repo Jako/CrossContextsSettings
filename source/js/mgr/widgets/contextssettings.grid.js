@@ -97,7 +97,7 @@ CrossContextsSettings.grid.ContextsSettings = function (config) {
         autosave: true,
         showActionsColumn: false,
         tbar: [{
-            text: _('crosscontextssettings.setting_create'),
+            text: _('create'),
             cls: 'primary-button',
             handler: this.createSetting,
         }, {
@@ -301,12 +301,12 @@ Ext.extend(CrossContextsSettings.grid.ContextsSettings, MODx.grid.Grid, {
                 {
                     className: 'update',
                     icon: 'pencil-square-o',
-                    text: _('crosscontextssettings.update')
+                    text: _('update')
                 },
                 {
                     className: 'remove',
                     icon: 'trash-o',
-                    text: _('crosscontextssettings.remove')
+                    text: _('remove')
                 }
             ]
         };

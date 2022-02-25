@@ -15,6 +15,7 @@ $_lang['crosscontextssettings.contextssettings_desc'] = 'Verwalten Sie die Einst
 $_lang['crosscontextssettings.debug_mode'] = 'Debug Mode';
 $_lang['crosscontextssettings.menu'] = 'CrossContextsSettings';
 $_lang['crosscontextssettings.menu_desc'] = 'Verwalten Sie die Einstellungen von verschiedenen Kontexten an einem Ort.';
-$_lang['crosscontextssettings.setting_create'] = 'Einstellung erstellen';
 $_lang['crosscontextssettings.settings'] = '<i class="icon icon-cog"></i>';
 $_lang['crosscontextssettings.settings_desc'] = 'Bearbeiten Sie die Einstellungen von CrossContextsSettings. Sie können den Wert einer Systemeinstellung bearbeiten, indem Sie auf die Tabellenzelle \'Wert\' doppelklicken oder mit der rechten Maustaste in die Tabellenzelle klicken.';
+$_lang['crosscontextssettings.systemsetting_key_err_nv'] = 'Sie dürfen nur Einstellungen mit dem Prefix crosscontextssettings bearbeiten.';
+$_lang['crosscontextssettings.systemsetting_usergroup_err_nv'] = 'Nur Benutzer mit einer settings Berechtigung oder einer settings_crosscontextssettings Berechtigung können die Einstellungen ändern.';
