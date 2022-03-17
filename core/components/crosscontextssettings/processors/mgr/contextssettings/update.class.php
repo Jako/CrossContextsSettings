@@ -47,7 +47,7 @@ class CrossContextsSettingsSettingsSettingsUpdateProcessor extends ObjectProcess
                             'xtype' => $properties['xtype'],
                             'namespace' => $properties['namespace'],
                             'area' => $properties['area'],
-                        ]);
+                        ], '', true);
                         if ($setting->save() === false) {
                             $message = $this->modx->lexicon('crosscontextssettings.contextsetting_err_save', ['key' => $properties['key'], 'context' => $k]);
                             $this->modx->log(xPDO::LOG_LEVEL_ERROR, $message, '', 'CrossContextsSettings');

@@ -39,8 +39,7 @@ CrossContextsSettings.grid.ContextsSettings = function (config) {
             hidden: true,
             id: 'area',
         }, {
-            renderer: _this.buttonColumnRenderer,
-            scope: _this,
+            renderer: this.buttonColumnRenderer.bind(this),
             menuDisabled: true,
             locked: true,
             width: 80
@@ -310,7 +309,7 @@ Ext.extend(CrossContextsSettings.grid.ContextsSettings, MODx.grid.Grid, {
                 }
             ]
         };
-        return this.scope.buttonColumnTpl.apply(values);
+        return this.buttonColumnTpl.apply(values);
     },
     onClick: function (e) {
         var t = e.getTarget();
