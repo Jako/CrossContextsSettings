@@ -3,7 +3,7 @@
   "lowCaseName": "crosscontextssettings",
   "description": "Manage the settings of different contexts in one place",
   "author": "Rico Goldsky, Thomas Jakobi",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "package": {
     "menus": [
       {

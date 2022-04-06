@@ -35,26 +35,23 @@ class CrossContextsSettingsSettingsSettingsUpdateProcessor extends ObjectProcess
             if ($properties['xtype'] === 'combo-boolean' && empty($v)) {
                 $v = 0;
             }
-            if ($v !== '') {
+            if ($v !== '' && $this->modx->getContext($k)) {
                 if (!$setting) {
-                    if (isset($properties[$k])) {
-                        /** @var modContextSetting $setting */
-                        $setting = $this->modx->newObject($this->classKey);
-                        $setting->fromArray([
-                            'context_key' => $k,
-                            'key' => $properties['key'],
-                            'value' => $v,
-                            'xtype' => $properties['xtype'],
-                            'namespace' => $properties['namespace'],
-                            'area' => $properties['area'],
-                        ], '', true);
-                        if ($setting->save() === false) {
-                            $message = $this->modx->lexicon('crosscontextssettings.contextsetting_err_save', ['key' => $properties['key'], 'context' => $k]);
-                            $this->modx->log(xPDO::LOG_LEVEL_ERROR, $message, '', 'CrossContextsSettings');
-                            continue;
-                        }
-                        $contexts[$k] = 1;
+                    $result = $this->modx->runProcessor('context/setting/create', [
+                        'fk' => $k,
+                        'key' => $properties['key'],
+                        'value' => $v,
+                        'xtype' => $properties['xtype'],
+                        'namespace' => $properties['namespace'],
+                        'area' => $properties['area']
+                    ]);
+                    if ($result->isError()) {
+                        $response = $result->getAllErrors();
+                        $message = isset($response[0]) ? $response[0] : $this->modx->lexicon('setting_err_save');
+                        $this->modx->log(xPDO::LOG_LEVEL_ERROR, $message, '', 'CrossContextsSettings');
+                        return $this->failure($message);
                     }
+                    $contexts[$k] = 1;
                     continue;
                 }
                 // Skip saving same value

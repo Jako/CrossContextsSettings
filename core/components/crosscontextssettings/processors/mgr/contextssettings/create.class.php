@@ -27,49 +27,43 @@ class CrossContextsSettingsSettingsCreateProcessor extends ObjectProcessor
         if (empty($primaryKey)) {
             return $this->modx->lexicon('setting_err_ns');
         }
-        $contexts = $this->getProperty('contexts', false);
-        if (empty($contexts)) {
-            return $this->modx->lexicon('setting_err_nf');
-        }
-        $this->contexts = json_decode($contexts, true);
-        foreach ($this->contexts as $fk) {
-            $context = $this->modx->getContext($fk);
-            if (empty($context)) {
-                return $this->modx->lexicon('setting_err_nf');
-            }
-        }
         return true;
     }
 
     /**
      * {@inheritDoc}
-     * @return mixed
+     * @return array|string
      */
     public function process()
     {
         $properties = $this->getProperties();
         $contexts = [];
 
-        foreach ($this->contexts as $fk) {
-            $value = trim($properties['value'][$fk]);
-            if ($value === '') {
+        foreach ($properties as $k => $v) {
+            if (in_array($k, ['action', 'key', 'name', 'xtype', 'namespace', 'area', 'description', 'menu'])) {
                 continue;
             }
-            $result = $this->modx->runProcessor('context/setting/create', [
-                'fk' => $fk,
-                'key' => $properties['key'],
-                'name' => $properties['name'],
-                'description' => $properties['description'],
-                'namespace' => $properties['namespace'],
-                'xtype' => $properties['xtype'],
-                'area' => $properties['area'],
-                'value' => $value,
-            ]);
-            if ($result->isError()) {
-                $response = $result->getAllErrors();
-                return $this->failure(isset($response[0]) ? $response[0] : '');
+            $v = trim($v);
+            if ($properties['xtype'] === 'combo-boolean' && empty($v)) {
+                $v = 0;
             }
-            $contexts[$fk] = 1;
+            if ($v !== '' && $this->modx->getContext($k)) {
+                $result = $this->modx->runProcessor('context/setting/create', [
+                    'fk' => $k,
+                    'key' => $properties['key'],
+                    'value' => $v,
+                    'xtype' => $properties['xtype'],
+                    'namespace' => $properties['namespace'],
+                    'area' => $properties['area']
+                ]);
+                if ($result->isError()) {
+                    $response = $result->getAllErrors();
+                    $message = isset($response[0]) ? $response[0] : $this->modx->lexicon('setting_err_save');
+                    $this->modx->log(xPDO::LOG_LEVEL_ERROR, $message, '', 'CrossContextsSettings');
+                    return $this->failure($message);
+                }
+                $contexts[$k] = 1;
+            }
         }
 
         if ($this->crosscontextssettings->getOption('clear_cache')) {
