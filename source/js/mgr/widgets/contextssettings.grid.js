@@ -193,6 +193,11 @@ Ext.extend(CrossContextsSettings.grid.ContextsSettings, MODx.grid.Grid, {
                 return false;
             }
             r = this.menu.record;
+        } else {
+            r = {
+                namespace: Ext.getCmp(this.ident + '-filter-namespace').value || '',
+                area: Ext.getCmp(this.ident + '-filter-area').value || '',
+            }
         }
         var createUpdateSetting = MODx.load({
             xtype: 'crosscontextssettings-window-contextssetting-create-update',
@@ -425,15 +430,6 @@ CrossContextsSettings.window.CreateUpdateContextsSetting = function (config) {
         }]
     });
     CrossContextsSettings.window.CreateUpdateContextsSetting.superclass.constructor.call(this, config);
-    if (!config.isUpdate) {
-        this.on('show', function () {
-            this.reset();
-            this.setValues({
-                namespace: Ext.getCmp('modx-filter-namespace').value,
-                area: Ext.getCmp('modx-filter-area').value
-            });
-        }, this);
-    }
 };
 Ext.extend(CrossContextsSettings.window.CreateUpdateContextsSetting, MODx.Window);
 Ext.reg('crosscontextssettings-window-contextssetting-create-update', CrossContextsSettings.window.CreateUpdateContextsSetting);
