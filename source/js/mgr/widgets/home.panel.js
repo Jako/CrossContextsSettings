@@ -80,7 +80,7 @@ Ext.reg('crosscontextssettings-panel-hometab', CrossContextsSettings.panel.HomeT
 
 CrossContextsSettings.panel.Overview = function (config) {
     config = config || {};
-    this.ident = 'crosscontextssettings-panel-overview' + Ext.id();
+    this.ident = 'crosscontextssettings-panel-overview-' + Ext.id();
     this.panelOverviewTabs = [{
         xtype: 'crosscontextssettings-panel-hometab',
         title: _('crosscontextssettings.contextssettings'),

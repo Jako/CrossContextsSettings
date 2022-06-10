@@ -11,6 +11,7 @@ CrossContextsSettings.grid.ContextsSettings = function (config) {
         + '</tpl>', {
         compiled: true
     });
+    this.ident = 'crosscontextssettings-contextssettings-' + Ext.id();
     var _this = this;
     var columns = [];
     var fields = ['key', 'xtype', 'namespace', 'area'];
@@ -102,7 +103,7 @@ CrossContextsSettings.grid.ContextsSettings = function (config) {
         }, {
             xtype: 'modx-combo-namespace',
             name: 'namespace',
-            id: 'crosscontextssettings-filter-namespace',
+            id: this.ident + '-filter-namespace',
             emptyText: _('namespace_filter'),
             allowBlank: true,
             width: 150,
@@ -115,7 +116,7 @@ CrossContextsSettings.grid.ContextsSettings = function (config) {
         }, {
             xtype: 'modx-combo-area',
             name: 'area',
-            id: 'crosscontextssettings-filter-area',
+            id: this.ident + '-filter-area',
             emptyText: _('area_filter'),
             baseParams: {
                 action: 'system/settings/getAreas'
@@ -131,7 +132,7 @@ CrossContextsSettings.grid.ContextsSettings = function (config) {
         }, '->', {
             xtype: 'textfield',
             name: 'filter_key',
-            id: 'crosscontextssettings-filter-key',
+            id: this.ident + '-filter-key',
             cls: 'x-form-filter',
             emptyText: _('search_by_key'),
             listeners: {
@@ -152,7 +153,7 @@ CrossContextsSettings.grid.ContextsSettings = function (config) {
             }
         }, {
             xtype: 'button',
-            id: 'crosscontextssettings-filter-clear',
+            id: this.ident + '-filter-clear',
             cls: 'x-form-filter-clear',
             text: _('filter_clear'),
             listeners: {
@@ -231,9 +232,9 @@ Ext.extend(CrossContextsSettings.grid.ContextsSettings, MODx.grid.Grid, {
         store.baseParams.key = '';
         store.baseParams.namespace = '';
         store.baseParams.area = '';
-        Ext.getCmp('crosscontextssettings-filter-namespace').reset();
-        Ext.getCmp('crosscontextssettings-filter-area').reset();
-        Ext.getCmp('crosscontextssettings-filter-key').reset();
+        Ext.getCmp(this.ident + '-filter-namespace').reset();
+        Ext.getCmp(this.ident + '-filter-area').reset();
+        Ext.getCmp(this.ident + '-filter-key').reset();
         this.getBottomToolbar().changePage(1);
         this.refresh();
     },

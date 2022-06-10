@@ -58,7 +58,7 @@ class CrossContextsSettingsSettingsGetListProcessor extends ObjectGetListProcess
             $c->where([$this->classKey . '.context_key:IN' => $contextsKeys]);
         }
         $namespace = $this->getProperty('namespace');
-        if ($namespace && $namespace != 'core') {
+        if ($namespace) {
             $c->where([
                 $this->classKey . '.namespace:=' => $namespace
             ]);
