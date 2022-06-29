@@ -40,7 +40,8 @@ Ext.extend(CrossContextsSettings.panel.ClearCache, MODx.FormPanel, {
                 _this.add({
                     xtype: 'xcheckbox',
                     boxLabel: item.name || item.key,
-                    name: 'ctxs[' + item.key + ']'
+                    name: 'ctxs[' + item.key + ']',
+                    hiddenName: 'ctxs[' + item.key + ']'
                 });
             });
             _this.doLayout();
