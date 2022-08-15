@@ -278,8 +278,14 @@ Ext.extend(CrossContextsSettings.grid.ContextsSettings, MODx.grid.Grid, {
             f = MODx.grid.Grid.prototype.rendYesNo;
             return f(v, md, rec, ri, ci, s, g);
         } else if (r.xtype === 'datefield') {
-            f = Ext.util.Format.dateRenderer(MODx.config.manager_date_format);
-            return f(v, md, rec, ri, ci, s, g);
+            return function (v) {
+                if (typeof v === 'string' && v !== '' && Date.parseDate(v, 'Y-m-d H:i:s')) {
+                    v = Date.parseDate(v, 'Y-m-d H:i:s');
+                    return Ext.util.Format.date(v, MODx.config.manager_date_format);
+                } else {
+                    return v;
+                }
+            }
         } else if (r.xtype === 'text-password' || r.xtype === 'modx-text-password') {
             f = MODx.grid.Grid.prototype.rendPassword;
             return f(v, md, rec, ri, ci, s, g);
