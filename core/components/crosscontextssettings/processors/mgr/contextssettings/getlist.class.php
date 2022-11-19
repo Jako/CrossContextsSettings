@@ -50,7 +50,7 @@ class CrossContextsSettingsSettingsGetListProcessor extends ObjectGetListProcess
     public function prepareQueryBeforeCount(xPDOQuery $c)
     {
         $c->select($this->modx->getSelectColumns($this->classKey, $this->classKey, '', ['key']));
-        $c->select('MIN(' . $this->classKey . '.context_key) as context_key');
+        $c->select(['context_key' => 'MIN(' . $this->classKey . '.context_key)']);
         $c->where([
             $this->classKey . '.context_key:!=' => 'mgr'
         ]);
