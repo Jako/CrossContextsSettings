@@ -105,8 +105,8 @@ CrossContextsSettings.panel.Overview = function (config) {
             xtype: 'modx-tabs',
             border: true,
             autoScroll: true,
-            deferredRender: false,
-            forceLayout: true,
+            deferredRender: true,
+            forceLayout: false,
             defaults: {
                 layout: 'form',
                 autoHeight: true,
