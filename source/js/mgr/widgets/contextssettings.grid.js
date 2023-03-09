@@ -378,6 +378,7 @@ CrossContextsSettings.window.CreateUpdateContextsSetting = function (config) {
                     name: 'key',
                     id: this.ident + '-key',
                     maxLength: 100,
+                    readOnly: config.isUpdate,
                     anchor: '100%'
                 }, {
                     xtype: 'label',

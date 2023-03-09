@@ -27,6 +27,7 @@ class CrossContextsSettingsSettingsSettingsUpdateProcessor extends ObjectProcess
             if (in_array($k, ['action', 'key', 'name', 'xtype', 'namespace', 'area', 'description', 'menu'])) {
                 continue;
             }
+            /** @var modContextSetting $setting */
             $setting = $this->modx->getObject($this->classKey, [
                 'key' => $properties['key'],
                 'context_key' => $k,
@@ -55,10 +56,15 @@ class CrossContextsSettingsSettingsSettingsUpdateProcessor extends ObjectProcess
                     continue;
                 }
                 // Skip saving same value
-                if ($setting->get('value') == $v) {
+                if ($setting->get('value') == $v && $setting->get('xtype') == $properties['xtype'] && $setting->get('namespace') == $properties['namespace'] && $setting->get('area') == $properties['area']) {
                     continue;
                 }
-                $setting->set('value', $v);
+                $setting->fromArray([
+                    'value' => $v,
+                    'xtype' => $properties['xtype'],
+                    'namespace' => $properties['namespace'],
+                    'area' => $properties['area'],
+                ]);
                 if ($setting->save() === false) {
                     $message = $this->modx->lexicon('crosscontextssettings.contextsetting_err_save', ['key' => $properties['key'], 'context' => $k]);
                     $this->modx->log(xPDO::LOG_LEVEL_ERROR, $message, '', 'CrossContextsSettings');

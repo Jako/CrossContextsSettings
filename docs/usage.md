@@ -43,8 +43,8 @@ CrossContextsSettings.
 
 CrossContextsSettings uses the following system settings in the namespace `crosscontextssettings`:
 
-Key | Description
-----|------------
-Clear Context Cache | Clear the context cache after modifying an entry.
-Contexts | Comma separated list of contexts displayed in the custom manager page. No value means that all contexts are displayed.
-Debug | Log debug information in MODX error log.
+| Key                               | Name                | Description                                                                                                            | Default |
+|-----------------------------------|---------------------|------------------------------------------------------------------------------------------------------------------------|---------|
+| crosscontextssettings.clear_cache | Clear Context Cache | Clear the context cache after modifying an entry.                                                                      | No      |
+| crosscontextssettings.contexts    | Contexts            | Comma separated list of contexts displayed in the custom manager page. No value means that all contexts are displayed. | -       |
+| crosscontextssettings.debug       | Debug               | Log debug information in the MODX error log.                                                                           | No      |
