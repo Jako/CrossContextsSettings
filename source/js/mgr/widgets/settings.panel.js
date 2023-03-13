@@ -70,9 +70,7 @@ if (MODx.grid.SettingsGrid) {
                 grid: this,
                 listeners: {
                     success: {
-                        fn: function () {
-                            this.refresh();
-                        },
+                        fn: this.refresh,
                         scope: this
                     }
                 }
