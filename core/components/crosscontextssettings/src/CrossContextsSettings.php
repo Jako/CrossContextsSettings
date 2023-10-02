@@ -92,7 +92,7 @@ class CrossContextsSettings
         $this->options = array_merge($this->options, [
             'debug' => (bool)$this->getOption('debug', $options, false),
             'modxversion' => $modxversion['version'],
-            'is_admin' => $this->modx->user && ($modx->hasPermission('settings') || $modx->hasPermission($this->namespace . '_settings')),
+            'is_admin' => $this->modx->user && $this->modx->context && ($modx->hasPermission('settings') || $modx->hasPermission($this->namespace . '_settings')),
             'contexts' => $this->getContextList($this->modx->getOption($this->namespace . '.contexts')),
             'clear_cache' => (bool)$this->modx->getOption($this->namespace . '.clear_cache', null, '0') == 1
         ]);
