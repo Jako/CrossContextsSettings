@@ -1,4 +1,4 @@
-[![Default Lexicon](https://hosted.weblate.org/widgets/modx-extras/crosscontextssettings/standard/svg-badge.svg)](https://hosted.weblate.org/projects/modx-extras/crosscontextssettings/standard/)
+[![Default Lexicon](https://hosted.weblate.org/widget/modx-extras/crosscontextssettings/standard/svg-badge.svg)](https://hosted.weblate.org/projects/modx-extras/crosscontextssettings/standard/)
 
 # CrossContextsSettings
 
