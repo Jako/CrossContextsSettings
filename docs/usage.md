@@ -2,7 +2,7 @@
 
 To use the component, navigate to your manager and click on "Extras > CrossContextsSettings".
 
-[![](img/crosscontextssettings.png)](img/crosscontextssettings.png)
+![Tab Context Settings](img/crosscontextssettings.png)
 
 You could create a new context setting in several contexts with a click on the
 Create New Setting button on the top left above the contexts settings grid.
@@ -17,7 +17,7 @@ setting.
 
 The context setting create window has a variety of options that can be set.
 
-[![](img/crosscontextssettings-create.png)](img/crosscontextssettings-create.png)
+![Create Context Setting](img/crosscontextssettings-create.png)
 
 You could set the setting key, the setting name, the setting description, the
 setting field type, the setting namespace and the setting area. The fields in
@@ -31,15 +31,14 @@ with `Value (context name)`:
 
 The clear cache tab allows you to clear any context cache manually.
 
-[![](img/crosscontextssettings-cache.png)](img/crosscontextssettings-cache.png)
-
+![Tab lear Cache](img/crosscontextssettings-cache.png)
 
 ## Settings
 
 The settings tab allows you to edit the system settings of
 CrossContextsSettings.
 
-[![](img/crosscontextssettings-settings.png)](img/crosscontextssettings-settings.png)
+![Tab Settings](img/crosscontextssettings-settings.png)
 
 CrossContextsSettings uses the following system settings in the namespace `crosscontextssettings`:
 
