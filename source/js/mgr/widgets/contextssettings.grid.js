@@ -38,10 +38,11 @@ CrossContextsSettings.grid.ContextsSettings = function (config) {
             dataIndex: 'area',
             locked: true,
             hidden: true,
-            id: 'area',
+            id: 'area'
         }, {
             renderer: this.buttonColumnRenderer.bind(this),
             menuDisabled: true,
+            fixed: true,
             locked: true,
             width: 80
         }];
@@ -91,7 +92,6 @@ CrossContextsSettings.grid.ContextsSettings = function (config) {
         remoteSort: true,
         anchor: '100%',
         view: new Ext.ux.grid.LockingGridView(),
-        height: 595,
         autoHeight: false,
         save_action: 'mgr/contextssettings/updatefromgrid',
         autosave: true,
@@ -102,10 +102,8 @@ CrossContextsSettings.grid.ContextsSettings = function (config) {
             handler: this.createSetting,
         }, {
             xtype: 'modx-combo-namespace',
-            name: 'namespace',
             id: this.ident + '-filter-namespace',
             emptyText: _('namespace_filter'),
-            allowBlank: true,
             width: 150,
             listeners: {
                 select: {
@@ -115,14 +113,12 @@ CrossContextsSettings.grid.ContextsSettings = function (config) {
             }
         }, {
             xtype: 'modx-combo-area',
-            name: 'area',
             id: this.ident + '-filter-area',
             emptyText: _('area_filter'),
             baseParams: {
                 action: 'system/settings/getAreas'
             },
             width: 250,
-            allowBlank: true,
             listeners: {
                 select: {
                     fn: this.filterByArea,
@@ -308,18 +304,15 @@ Ext.extend(CrossContextsSettings.grid.ContextsSettings, MODx.grid.Grid, {
     },
     buttonColumnRenderer: function () {
         var values = {
-            action_buttons: [
-                {
-                    className: 'update',
-                    icon: 'pencil-square-o',
-                    text: _('update')
-                },
-                {
-                    className: 'remove',
-                    icon: 'trash-o',
-                    text: _('remove')
-                }
-            ]
+            action_buttons: [{
+                className: 'update',
+                icon: 'pencil-square-o',
+                text: _('update')
+            }, {
+                className: 'remove',
+                icon: 'trash-o',
+                text: _('remove')
+            }]
         };
         return this.buttonColumnTpl.apply(values);
     },

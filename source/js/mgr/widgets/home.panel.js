@@ -31,7 +31,7 @@ CrossContextsSettings.panel.Home = function (config) {
                             '<img src="' + CrossContextsSettings.config.assetsUrl + 'img/mgr/virtudraft.png" srcset="' + CrossContextsSettings.config.assetsUrl + 'img/mgr/virtudraft@2x.png 2x" alt="virtudraft" style="margin-top: 10px"><br>' +
                             '&copy; 2014-2020 by Virtudraft <a href="https://github.com/virtudraft" target="_blank">github.com/virtudraft</a><br>' +
                             '<img src="' + CrossContextsSettings.config.assetsUrl + 'img/mgr/treehill-studio.png" srcset="' + CrossContextsSettings.config.assetsUrl + 'img/mgr/treehill-studio@2x.png 2x" alt="Treehill Studio" style="margin-top: 10px"><br>' +
-                            '&copy; 2021-2023 by <a href="https://treehillstudio.com" target="_blank">treehillstudio.com</a></span>';
+                            '&copy; 2021-2024 by <a href="https://treehillstudio.com" target="_blank">treehillstudio.com</a></span>';
                         Ext.Msg.show({
                             title: _('crosscontextssettings') + ' ' + CrossContextsSettings.config.version,
                             msg: msg,
@@ -70,6 +70,17 @@ CrossContextsSettings.panel.HomeTab = function (config) {
                 xtype: 'crosscontextssettings-' + config.contenttype + '-' + config.tabtype,
                 preventRender: true,
                 contexts: CrossContextsSettings.config.contexts,
+                listeners: {
+                    afterrender: function () {
+                        this.store.on('load', function () {
+                            var tbarHeight = this.getTopToolbar().getHeight();
+                            var lockedHdHeight = this.getView().lockedHd.getHeight();
+                            var lockedBodyHeight = this.getView().lockedBody.getHeight();
+                            var bbarHeight = this.getBottomToolbar().getHeight();
+                            this.setHeight(tbarHeight + lockedHdHeight + lockedBodyHeight + bbarHeight + 14);
+                        }, this);
+                    }
+                }
             }]
         }],
     });
@@ -97,13 +108,21 @@ CrossContextsSettings.panel.Overview = function (config) {
     if (CrossContextsSettings.config.is_admin) {
         this.panelOverviewTabs.push({
             xtype: 'crosscontextssettings-panel-settings'
-        })
+        });
     }
     Ext.applyIf(config, {
         id: this.ident,
         items: [{
             xtype: 'modx-tabs',
             border: true,
+            stateful: true,
+            stateId: 'babel-panel-overview',
+            stateEvents: ['tabchange'],
+            getState: function () {
+                return {
+                    activeTab: this.items.indexOf(this.getActiveTab())
+                };
+            },
             autoScroll: true,
             deferredRender: true,
             forceLayout: false,

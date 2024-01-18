@@ -3,7 +3,7 @@
  * CrossContextsSettings
  *
  * Copyright 2014-2020 by goldsky <goldsky@virtudraft.com>
- * Copyright 2021-2023 by Thomas Jakobi <office@treehillstudio.com>
+ * Copyright 2021-2024 by Thomas Jakobi <office@treehillstudio.com>
  *
  * @package crosscontextssettings
  * @subpackage classfile
@@ -41,7 +41,7 @@ class CrossContextsSettings
      * The version
      * @var string $version
      */
-    public $version = '1.2.4';
+    public $version = '1.2.5';
 
     /**
      * The class options
