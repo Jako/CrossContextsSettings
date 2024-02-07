@@ -158,7 +158,18 @@ CrossContextsSettings.grid.ContextsSettings = function (config) {
                     scope: this
                 }
             }
-        }]
+        }],
+        listeners: {
+            afterrender: function () {
+                this.store.on('load', function () {
+                    var tbarHeight = this.getTopToolbar().getHeight();
+                    var lockedHdHeight = this.getView().lockedHd.getHeight();
+                    var lockedBodyHeight = this.getView().lockedBody.getHeight();
+                    var bbarHeight = this.getBottomToolbar().getHeight();
+                    this.setHeight(tbarHeight + lockedHdHeight + lockedBodyHeight + bbarHeight + 14);
+                }, this);
+            }
+        }
     });
     CrossContextsSettings.grid.ContextsSettings.superclass.constructor.call(this, config);
 };

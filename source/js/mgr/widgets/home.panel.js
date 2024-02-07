@@ -69,18 +69,7 @@ CrossContextsSettings.panel.HomeTab = function (config) {
                 id: 'crosscontextssettings-panel-' + config.tabtype + '-' + config.contenttype,
                 xtype: 'crosscontextssettings-' + config.contenttype + '-' + config.tabtype,
                 preventRender: true,
-                contexts: CrossContextsSettings.config.contexts,
-                listeners: {
-                    afterrender: function () {
-                        this.store.on('load', function () {
-                            var tbarHeight = this.getTopToolbar().getHeight();
-                            var lockedHdHeight = this.getView().lockedHd.getHeight();
-                            var lockedBodyHeight = this.getView().lockedBody.getHeight();
-                            var bbarHeight = this.getBottomToolbar().getHeight();
-                            this.setHeight(tbarHeight + lockedHdHeight + lockedBodyHeight + bbarHeight + 14);
-                        }, this);
-                    }
-                }
+                contexts: CrossContextsSettings.config.contexts
             }]
         }],
     });
@@ -141,8 +130,8 @@ CrossContextsSettings.panel.Overview = function (config) {
                     } else if (t.xtype === 'crosscontextssettings-panel-hometab') {
                         MODx.request.ns = '';
                         MODx.request.area = '';
-                        if (Ext.getCmp('crosscontextssettings-panel-' + t.tabtype + '-grid')) {
-                            Ext.getCmp('crosscontextssettings-panel-' + t.tabtype + '-grid').getStore().reload();
+                        if (Ext.getCmp('crosscontextssettings-grid-settings')) {
+                            Ext.getCmp('crosscontextssettings-grid-settings').getStore().reload();
                         }
                     }
                 }
