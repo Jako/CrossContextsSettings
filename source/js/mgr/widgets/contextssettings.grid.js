@@ -313,7 +313,8 @@ Ext.extend(CrossContextsSettings.grid.ContextsSettings, MODx.grid.Grid, {
         }
         return v;
     },
-    buttonColumnRenderer: function () {
+    buttonColumnRenderer: function (value, metaData) {
+        metaData.css = 'x-grid-cell-icons';
         var values = {
             action_buttons: [{
                 className: 'update',
