@@ -33,7 +33,7 @@ class CrossContextsSettingsSettingsGetListProcessor extends ObjectGetListProcess
                 }
             }
             $count = count($columns);
-            if ($count < 3) {
+            if ($count <= 4) {
                 return $this->modx->lexicon('crosscontextssettings.context_err_ns');
             }
             $this->columns = $columns;

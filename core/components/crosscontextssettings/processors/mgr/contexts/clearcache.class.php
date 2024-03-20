@@ -24,11 +24,8 @@ class CrossContextsSettingsContextsClearCacheProcessor extends ObjectProcessor
             return $this->modx->lexicon('crosscontextssettings.context_err_ns');
         }
         $check = false;
-        foreach ($ctxs as $ctx => $val) {
-            if ($val == '1') {
-                $check = true;
-                break;
-            }
+        foreach ($ctxs as $val) {
+            $check = ($val == '1') ? true : $check;
         }
         if (empty($check)) {
             return $this->modx->lexicon('crosscontextssettings.context_err_ns');
@@ -53,13 +50,14 @@ class CrossContextsSettingsContextsClearCacheProcessor extends ObjectProcessor
         }
         if (!empty($contexts)) {
             if (!$this->modx->cacheManager->refresh([
-                'auto_publish' => ['contexts' => array_diff($contexts, ['mgr'])],
+                'db' => [],
                 'system_settings' => [],
-                'context_settings' => ['contexts' => $contexts],
                 'lexicon_topics' => [],
+                'auto_publish' => ['contexts' => array_diff($contexts, ['mgr'])],
+                'context_settings' => ['contexts' => $contexts],
                 'resource' => ['contexts' => array_diff($contexts, ['mgr'])],
-                'menu' => [],
-                'action_map' => []
+                $this->modx->getOption('cache_menu_key', null, 'menu') => [],
+                $this->modx->getOption('cache_action_map_key', null, 'action_map') => []
             ])) {
                 return $this->failure();
             }

@@ -44,7 +44,7 @@ CrossContextsSettings.grid.ContextsSettings = function (config) {
             menuDisabled: true,
             fixed: true,
             locked: true,
-            width: 80
+            width: 50
         }];
         Ext.each(config.contexts, function (item) {
             columns.push({
