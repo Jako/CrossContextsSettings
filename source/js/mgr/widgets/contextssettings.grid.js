@@ -165,7 +165,14 @@ CrossContextsSettings.grid.ContextsSettings = function (config) {
                     var tbarHeight = this.getTopToolbar().getHeight();
                     var lockedHdHeight = this.getView().lockedHd.getHeight();
                     var lockedBodyHeight = this.getView().lockedBody.getHeight();
+                    var lockedScrollerHeight = this.getView().lockedScroller.getHeight();
                     var bbarHeight = this.getBottomToolbar().getHeight();
+                    var lockedWidth = this.getView().lockedBody.getWidth();
+                    var mainWidth = this.getView().mainBody.getWidth();
+                    var elWidth = this.getEl().getWidth();
+                    if (lockedWidth + mainWidth > elWidth) {
+                        lockedBodyHeight = lockedScrollerHeight;
+                    }
                     this.setHeight(tbarHeight + lockedHdHeight + lockedBodyHeight + bbarHeight + 14);
                 }, this);
             }
