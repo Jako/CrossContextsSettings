@@ -74,6 +74,8 @@ class CrossContextsSettingsSettingsCreateProcessor extends ObjectProcessor
             ]);
         }
 
+        $this->modx->invokeEvent('OnSiteRefresh');
+
         return $this->success();
     }
 }
