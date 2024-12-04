@@ -35,6 +35,15 @@ abstract class Processor extends modProcessor
         $this->crosscontextssettings = $this->modx->getService('crosscontextssettings', 'CrossContextsSettings', $corePath . 'model/crosscontextssettings/');
     }
 
+    /**
+     * {@inheritDoc}
+     * @return bool
+     */
+    public function checkPermissions()
+    {
+        return !empty($this->permission) ? $this->modx->hasPermission($this->permission) : true;
+    }
+
     abstract public function process();
 
     /**

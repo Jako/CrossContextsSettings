@@ -15,7 +15,7 @@ use TreehillStudio\CrossContextsSettings\CrossContextsSettings;
 /**
  * Class ObjectUpdateProcessor
  */
-abstract class ObjectUpdateProcessor extends modObjectUpdateProcessor
+class ObjectUpdateProcessor extends modObjectUpdateProcessor
 {
     public $languageTopics = ['crosscontextssettings:default'];
 

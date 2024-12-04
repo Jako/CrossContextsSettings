@@ -15,7 +15,7 @@ use TreehillStudio\CrossContextsSettings\CrossContextsSettings;
 /**
  * Class ObjectRemoveProcessor
  */
-abstract class ObjectRemoveProcessor extends modObjectRemoveProcessor
+class ObjectRemoveProcessor extends modObjectRemoveProcessor
 {
     public $languageTopics = ['crosscontextssettings:default'];
 
