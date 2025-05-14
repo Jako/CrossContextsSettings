@@ -13,10 +13,22 @@ if (file_exists(MODX_PROCESSORS_PATH . 'system/settings/update.class.php')) {
     class_alias(\MODX\Revolution\Processors\System\Settings\Update::class, \modSystemSettingsUpdateProcessor::class);
 }
 
+/**
+ * Class CrossContextsSettingsSystemSettingsUpdateProcessor
+ */
 class CrossContextsSettingsSystemSettingsUpdateProcessor extends modSystemSettingsUpdateProcessor
 {
     public $checkSavePermission = false;
     public $languageTopics = ['setting', 'namespace', 'crosscontextssettings:setting'];
+
+    /**
+     * {@inheritDoc}
+     * @return bool
+     */
+    public function checkPermissions()
+    {
+        return !empty($this->permission) ? $this->modx->hasPermission($this->permission) || $this->modx->hasPermission('crosscontextssettings_' . $this->permission) : true;
+    }
 
     /**
      * {@inheritDoc}
@@ -50,7 +62,7 @@ class CrossContextsSettingsSystemSettingsUpdateProcessor extends modSystemSettin
         if (strpos($key, 'crosscontextssettings.') !== 0) {
             $this->addFieldError('key', $this->modx->lexicon('crosscontextssettings.systemsetting_key_err_nv'));
         }
-        if (!$this->modx->hasPermission('settings') && !$this->modx->hasPermission('crosscontextssettings_settings')) {
+        if (!$this->modx->hasPermission($this->permission) && !$this->modx->hasPermission('crosscontextssettings_' . $this->permission)) {
             $this->addFieldError('usergroup', $this->modx->lexicon('crosscontextssettings.systemsetting_usergroup_err_nv'));
         }
     }
