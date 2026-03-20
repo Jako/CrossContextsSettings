@@ -1,4 +1,5 @@
 @use "sass:color";
+@use "sass:meta";
 
 $treehillstudio-color: #cbd842;
 $red: #be0000;
@@ -110,5 +111,5 @@ $red: #be0000;
   }
 }
 
-@import "../../js/mgr/ux/LockingGridView/LockingGridView";
-@import 'modx3';
+@include meta.load-css('../../js/mgr/ux/LockingGridView/LockingGridView');
+@include meta.load-css('modx3');
