@@ -87,14 +87,14 @@ gulp.task('images', gulp.series(imagesMgr));
 const bumpCopyright = function () {
     return gulp.src([
         'core/components/crosscontextssettings/model/crosscontextssettings/crosscontextssettings.class.php',
-        'core/components/crosscontextssettings/src/CrossContextsSettings.php',
+        'core/components/crosscontextssettings/src/CrossContextsSettings.php'
     ], {base: './'})
         .pipe(replace(/Copyright 2021(-\d{4})? by/g, 'Copyright ' + (year > 2021 ? '2021-' : '') + year + ' by'))
         .pipe(gulp.dest('.'));
 };
 const bumpVersion = function () {
     return gulp.src([
-        'core/components/crosscontextssettings/src/CrossContextsSettings.php',
+        'core/components/crosscontextssettings/src/CrossContextsSettings.php'
     ], {base: './'})
         .pipe(replace(/version = '\d+\.\d+\.\d+-?[0-9a-z]*'/ig, 'version = \'' + pkg.version + '\''))
         .pipe(gulp.dest('.'));
@@ -108,7 +108,7 @@ const bumpHomepanel = function () {
 };
 const bumpDocs = function () {
     return gulp.src([
-        'mkdocs.yml',
+        'zensical.toml',
     ], {base: './'})
         .pipe(replace(/, 2021(-\d{4})?/g, ', ' + (year > 2021 ? '2021-' : '') + year))
         .pipe(gulp.dest('.'));
