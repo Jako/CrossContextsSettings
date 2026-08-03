@@ -382,7 +382,7 @@ CrossContextsSettings.window.CreateUpdateContextsSetting = function (config) {
         fields: [{
             layout: 'column',
             items: [{
-                columnWidth: .5,
+                columnWidth: 0.5,
                 layout: 'form',
                 items: [{
                     xtype: 'textfield',
@@ -411,7 +411,7 @@ CrossContextsSettings.window.CreateUpdateContextsSetting = function (config) {
                     cls: 'desc-under'
                 }]
             }, {
-                columnWidth: .5,
+                columnWidth: 0.5,
                 layout: 'form',
                 items: [{
                     xtype: 'modx-combo-xtype-spec',
