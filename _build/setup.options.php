@@ -32,7 +32,6 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         
         <p>If you install this package, you are giving us your permission to
         collect, process and use that data for statistical purposes.</p>';
-
         break;
     case xPDOTransport::ACTION_UPGRADE:
         $output .= '<h2>Upgrade CrossContextsSettings</h2>
@@ -49,7 +48,6 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
 
         <p>If you upgrade this package, you are giving us your permission to
         collect, process and use that data for statistical purposes.</p>';
-
         break;
     case xPDOTransport::ACTION_UNINSTALL:
         break;
