@@ -1,6 +1,7 @@
 {
   "name": "treehillstudio/crosscontextssettings",
   "description": "Manage the settings of different contexts in one place",
+  "version": "1.2.7",
   "authors": [
     {
       "name": "Rico Goldsky",
