@@ -18,4 +18,4 @@ $_lang['crosscontextssettings.menu_desc'] = 'Verwalten Sie die Einstellungen von
 $_lang['crosscontextssettings.settings'] = '<i class="icon icon-cog"></i>';
 $_lang['crosscontextssettings.settings_desc'] = 'Bearbeiten Sie die Einstellungen von CrossContextsSettings. Sie können den Wert einer Systemeinstellung mit einem Doppelklick auf die ‚Wert‘-Tabellenzelle oder die Systemeinstellung mit einem Rechtsklick in der Tabellenzelle bearbeiten.';
 $_lang['crosscontextssettings.systemsetting_key_err_nv'] = 'Sie dürfen nur Einstellungen mit dem Prefix crosscontextssettings bearbeiten.';
-$_lang['crosscontextssettings.systemsetting_usergroup_err_nv'] = 'Nur Benutzer mit einer settings Berechtigung oder einer settings_crosscontextssettings Berechtigung können die Einstellungen ändern.';
+$_lang['crosscontextssettings.systemsetting_usergroup_err_nv'] = 'Nur Benutzer mit einer settings Berechtigung oder einer crosscontextssettings_settings Berechtigung können die Einstellungen ändern.';
