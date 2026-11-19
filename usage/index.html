@@ -403,10 +403,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#create" class="md-nav__link">
+  <a href="#createupdate" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Create
+        Create/Update
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#remove" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Remove
       </span>
     </span>
   </a>
@@ -429,6 +440,17 @@
     <span class="md-ellipsis">
       <span class="md-typeset">
         Settings
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Permissions
       </span>
     </span>
   </a>
@@ -543,10 +565,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#create" class="md-nav__link">
+  <a href="#createupdate" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Create
+        Create/Update
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#remove" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Remove
       </span>
     </span>
   </a>
@@ -569,6 +602,17 @@
     <span class="md-ellipsis">
       <span class="md-typeset">
         Settings
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Permissions
       </span>
     </span>
   </a>
@@ -606,24 +650,48 @@
 <h2 id="custom-manager-page">Custom Manager Page</h2>
 <p>To use the component, navigate to your manager and click on "Extras &gt; CrossContextsSettings".</p>
 <p><a class="glightbox" data-type="image" href="../img/crosscontextssettings.png"><img alt="Tab Context Settings" src="../img/crosscontextssettings.png" /></a></p>
-<p>You could create a new context setting in several contexts with a click on the
-Create New Setting button on the top left above the contexts settings grid.</p>
-<p>The grid could be filtered by the namespace, the area and with a search input on
-the top right above the cronjob grid.</p>
-<p>Each context setting can be edited inline with a double click on the text of the
-setting.</p>
-<h2 id="create">Create</h2>
-<p>The context setting create window has a variety of options that can be set.</p>
+<p>The contexts settings grid shows each setting key in one row and the value of
+that setting in each context in one column. The <code>mgr</code> context is never shown.
+The displayed contexts can be restricted with the system setting
+<code>crosscontextssettings.contexts</code>.</p>
+<p>You can create a new context setting in several contexts with a click on the
+Create button on the top left above the contexts settings grid.</p>
+<p>The grid can be filtered by the namespace, the area and with a search input on
+the top right above the contexts settings grid. The namespace filter starts with
+the <code>core</code> namespace (or with the namespace in the <code>ns</code> URL parameter). The
+search by key looks in all namespaces and areas and resets the namespace and
+area filters.</p>
+<p>Each context setting can be edited inline with a double click on the value of
+the setting. If you empty a value, the setting is removed in that context. An
+inline edit only changes the value. The field type, the namespace and the area
+of the setting in the other contexts are not changed.</p>
+<p>Each row has an update and a remove button. You can also use the context menu
+of a row.</p>
+<h2 id="createupdate">Create/Update</h2>
+<p>The create/update window contains the following fields.</p>
 <p><a class="glightbox" data-type="image" href="../img/crosscontextssettings-create.png"><img alt="Create Context Setting" src="../img/crosscontextssettings-create.png" /></a></p>
-<p>You could set the setting key, the setting name, the setting description, the
-setting field type, the setting namespace and the setting area. The fields in
-that window are the same as in the default context setting create/edit window.</p>
+<p>You can set the setting key, the setting namespace, the setting field type and
+the setting area. The key can't be changed in the update window. The namespace
+of a new setting is prefilled with the namespace filter of the grid or with
+<code>core</code>. When you update a setting, the namespace, the field type and the area
+are changed in all displayed contexts that contain the setting.</p>
 <p>The values of each context setting can be filled below those fields in a
-(sometimes scrollable) section. Each possible context setting is listed there
-with <code>Value (context name)</code>:</p>
+(sometimes scrollable) section. Each displayed context is listed there with
+<code>Value (context key)</code>. If a value is empty, the setting is not created in that
+context, or it is removed there when you update the setting.</p>
+<p>A new setting needs a value in at least one context. If the setting key already
+exists in one of the displayed contexts, the setting is not created at all. Use
+the update window of that setting instead.</p>
+<h2 id="remove">Remove</h2>
+<p>The remove button removes the setting in all displayed contexts. Settings in the
+<code>mgr</code> context and in contexts that are not displayed are not touched.</p>
 <h2 id="clear-cache">Clear Cache</h2>
-<p>The clear cache tab allows you to clear any context cache manually.</p>
-<p><a class="glightbox" data-type="image" href="../img/crosscontextssettings-cache.png"><img alt="Tab lear Cache" src="../img/crosscontextssettings-cache.png" /></a></p>
+<p>The clear cache tab allows you to clear the cache of the selected contexts
+manually. The All checkbox selects or deselects all contexts.</p>
+<p>If the system setting <code>crosscontextssettings.clear_cache</code> is enabled, the cache
+of the changed contexts is cleared automatically after creating, updating or
+removing a setting.</p>
+<p><a class="glightbox" data-type="image" href="../img/crosscontextssettings-cache.png"><img alt="Tab Clear Cache" src="../img/crosscontextssettings-cache.png" /></a></p>
 <h2 id="settings">Settings</h2>
 <p>The settings tab allows you to edit the system settings of
 CrossContextsSettings.</p>
@@ -659,6 +727,9 @@ CrossContextsSettings.</p>
 </tr>
 </tbody>
 </table>
+<h2 id="permissions">Permissions</h2>
+<p>CrossContextsSettings can only be used by manager users with the <code>settings</code>
+permission. The menu entry is not shown to other manager users.</p>
 
 
 
