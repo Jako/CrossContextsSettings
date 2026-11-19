@@ -4,7 +4,7 @@
   "description": "Manage the settings of different contexts in one place",
   "author": "Rico Goldsky <goldsky@virtudraft.com>, Thomas Jakobi <office@treehillstudio.com>",
   "private": true,
-  "version": "1.2.7",
+  "version": "1.2.8",
   "phpversion": "7.2",
   "modxversion": "2.7",
   "startYear": "2021",

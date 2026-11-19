@@ -29,6 +29,15 @@ class CrossContextsSettingsHomeManagerController extends modExtraManagerControll
 
     /**
      * {@inheritDoc}
+     * @return bool
+     */
+    public function checkPermissions()
+    {
+        return $this->modx->hasPermission('settings');
+    }
+
+    /**
+     * {@inheritDoc}
      */
     public function loadCustomCssJs()
     {
@@ -56,7 +65,7 @@ class CrossContextsSettingsHomeManagerController extends modExtraManagerControll
         }
         $this->addHtml('<script type="text/javascript">
         Ext.onReady(function() {
-            CrossContextsSettings.config = ' . json_encode($this->crosscontextssettings->options, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . ';
+            CrossContextsSettings.config = ' . json_encode($this->crosscontextssettings->getManagerOptions(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . ';
             MODx.load({xtype: "crosscontextssettings-page-home"});
        });
         </script>');

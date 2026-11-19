@@ -1,7 +1,6 @@
 if (MODx.grid.SettingsGrid) {
     CrossContextsSettings.panel.Settings = function (config) {
         config = config || {};
-        MODx.request.ns = 'crosscontextssettings';
         Ext.applyIf(config, {
             id: 'crosscontextssettings-panel-settings',
             title: _('crosscontextssettings.settings'),
@@ -42,7 +41,11 @@ if (MODx.grid.SettingsGrid) {
             tbar: tbar,
             queryParam: (CrossContextsSettings.config.modxversion >= 3) ? 'query' : 'key'
         });
+        // The MODX settings grid reads the namespace from MODx.request.ns during the construction only, so set it temporarily
+        var ns = MODx.request.ns;
+        MODx.request.ns = 'crosscontextssettings';
         CrossContextsSettings.grid.SystemSettings.superclass.constructor.call(this, config);
+        MODx.request.ns = ns;
     };
     Ext.extend(CrossContextsSettings.grid.SystemSettings, MODx.grid.SettingsGrid, {
         _showMenu: function (g, ri, e) {

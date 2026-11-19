@@ -19,15 +19,17 @@ if (file_exists(MODX_PROCESSORS_PATH . 'system/settings/update.class.php')) {
 class CrossContextsSettingsSystemSettingsUpdateProcessor extends modSystemSettingsUpdateProcessor
 {
     public $checkSavePermission = false;
-    public $languageTopics = ['setting', 'namespace', 'crosscontextssettings:setting'];
+    public $languageTopics = ['setting', 'namespace', 'crosscontextssettings:setting', 'crosscontextssettings:default'];
 
     /**
+     * Force the namespace before the properties are set to the object
      * {@inheritDoc}
      * @return bool
      */
-    public function checkPermissions()
+    public function beforeSet()
     {
-        return !empty($this->permission) ? $this->modx->hasPermission($this->permission) || $this->modx->hasPermission('crosscontextssettings_' . $this->permission) : true;
+        $this->setProperty('namespace', 'crosscontextssettings');
+        return parent::beforeSet();
     }
 
     /**
@@ -36,34 +38,18 @@ class CrossContextsSettingsSystemSettingsUpdateProcessor extends modSystemSettin
      */
     public function beforeSave()
     {
-        $this->setProperty('namespace', 'crosscontextssettings');
-        $this->checkForBooleanValue();
         $this->checkCanSave();
         return parent::beforeSave();
     }
 
     /**
-     * {@inheritDoc}
-     * @return bool
-     */
-    public function afterSave()
-    {
-        $this->updateTranslations($this->getProperties());
-        $this->clearCache();
-        return parent::afterSave();
-    }
-
-    /**
-     * Verify the namespace passed is a valid namespace
+     * Only settings with the crosscontextssettings prefix could be edited
      */
     protected function checkCanSave()
     {
-        $key = $this->getProperty('key');
+        $key = (string)$this->getProperty('key');
         if (strpos($key, 'crosscontextssettings.') !== 0) {
             $this->addFieldError('key', $this->modx->lexicon('crosscontextssettings.systemsetting_key_err_nv'));
-        }
-        if (!$this->modx->hasPermission($this->permission) && !$this->modx->hasPermission('crosscontextssettings_' . $this->permission)) {
-            $this->addFieldError('usergroup', $this->modx->lexicon('crosscontextssettings.systemsetting_usergroup_err_nv'));
         }
     }
 }

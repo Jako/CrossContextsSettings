@@ -8,7 +8,7 @@ Edit the settings of different contexts in one place.
 
 ## Features
 
-CrossContextsSettings is an custom manager page, where you could edit the
+CrossContextsSettings is a custom manager page, where you can edit the
 settings of different contexts in one place.
 
 ## Installation

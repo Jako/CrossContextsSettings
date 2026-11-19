@@ -10,6 +10,8 @@ require_once(dirname(__FILE__) . '/update.class.php');
 
 class CrossContextsSettingsSettingsSettingsUpdateFromGridProcessor extends CrossContextsSettingsSettingsSettingsUpdateProcessor
 {
+    protected $updateMeta = false;
+
     /**
      * {@inheritDoc}
      * @return bool|string

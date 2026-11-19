@@ -3,7 +3,7 @@
  * CrossContextsSettings
  *
  * Copyright 2014-2020 by goldsky <goldsky@virtudraft.com>
- * Copyright 2021-2024 by Thomas Jakobi <office@treehillstudio.com>
+ * Copyright 2021-2026 by Thomas Jakobi <office@treehillstudio.com>
  *
  * @package crosscontextssettings
  * @subpackage classfile
@@ -41,7 +41,7 @@ class CrossContextsSettings
      * The version
      * @var string $version
      */
-    public $version = '1.2.7';
+    public $version = '1.2.8';
 
     /**
      * The class options
@@ -91,7 +91,7 @@ class CrossContextsSettings
         $this->options = array_merge($this->options, [
             'debug' => (bool)$this->getOption('debug', $options, false),
             'modxversion' => $modxversion['version'],
-            'is_admin' => $this->modx->user && $this->modx->context && ($modx->hasPermission('settings') || $modx->hasPermission($this->namespace . '_settings')),
+            'is_admin' => $this->modx->user && $this->modx->context && $this->modx->hasPermission('settings'),
             'contexts' => $this->getContextList($this->modx->getOption($this->namespace . '.contexts')),
             'clear_cache' => (bool)$this->modx->getOption($this->namespace . '.clear_cache', null, '0') == 1
         ]);
@@ -157,5 +157,24 @@ class CrossContextsSettings
             $data[] = $context->toArray('', false, true);
         }
         return $data;
+    }
+
+    /**
+     * Get the options used by the manager scripts, so that no server paths are output in the manager
+     *
+     * @param array|null $options Options to filter instead of the class options
+     * @return array
+     */
+    public function getManagerOptions(?array $options = null): array
+    {
+        return array_intersect_key($options ?? $this->options, array_flip([
+            'assetsUrl',
+            'connectorUrl',
+            'contexts',
+            'debug',
+            'is_admin',
+            'modxversion',
+            'version',
+        ]));
     }
 }

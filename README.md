@@ -25,7 +25,7 @@ For more information please read the [documentation](https://jako.github.io/Cros
 
 ## License
 
-The project is licensed under the [GPLv2 license](https://github.com/Jako/CrossContextsSettings/blob/master/core/components/crosscontextssettings/docs/license.md).
+The project is licensed under the [GPLv3 license](https://github.com/Jako/CrossContextsSettings/blob/master/core/components/crosscontextssettings/docs/license.md).
 
 ## Translations
 

@@ -11,13 +11,13 @@ settings of the contexts in a single view.
 
 ### Features
 
-* Tabular view of all settings in all contexts 
-* The displayed contexts can be restricted with a system settings
-* Create one setting in different contexts in one step
+* Tabular view of all settings in all contexts
+* The displayed contexts can be restricted with a system setting
+* Create, update and remove one setting in different contexts in one step
 
 ### License
 
-The project is licensed under the [GPLv2 license](https://github.com/Jako/CrossContextsSettings/LICENSE.md).
+The project is licensed under the [GPLv3 license](https://github.com/Jako/CrossContextsSettings/blob/master/core/components/crosscontextssettings/docs/license.md).
 
 ### Translations [![Default Lexicon](https://hosted.weblate.org/widget/modx-extras/crosscontextssettings/standard/svg-badge.svg)](https://hosted.weblate.org/projects/modx-extras/crosscontextssettings/)
 

@@ -24,15 +24,6 @@ class CrossContextsSettingsSystemSettingsGetlistProcessor extends modSystemSetti
 
     /**
      * {@inheritDoc}
-     * @return bool
-     */
-    public function checkPermissions()
-    {
-        return !empty($this->permission) ? $this->modx->hasPermission($this->permission) || $this->modx->hasPermission('crosscontextssettings_' . $this->permission) : true;
-    }
-
-    /**
-     * {@inheritDoc}
      * @return array
      */
     public function prepareCriteria()

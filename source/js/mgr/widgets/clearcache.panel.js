@@ -23,7 +23,7 @@ CrossContextsSettings.panel.ClearCache = function (config) {
         buttonAlign: 'left',
         items: [{
             xtype: 'xcheckbox',
-            boxLabel: 'All',
+            boxLabel: _('crosscontextssettings.clearcache_all'),
             listeners: {
                 check: {
                     fn: function (el) {

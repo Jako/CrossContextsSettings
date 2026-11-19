@@ -31,7 +31,7 @@ CrossContextsSettings.panel.Home = function (config) {
                             '<img src="' + CrossContextsSettings.config.assetsUrl + 'img/mgr/virtudraft.png" srcset="' + CrossContextsSettings.config.assetsUrl + 'img/mgr/virtudraft@2x.png 2x" alt="virtudraft" style="margin-top: 10px"><br>' +
                             '&copy; 2014-2020 by Virtudraft <a href="https://github.com/virtudraft" target="_blank">github.com/virtudraft</a><br>' +
                             '<img src="' + CrossContextsSettings.config.assetsUrl + 'img/mgr/treehill-studio.png" srcset="' + CrossContextsSettings.config.assetsUrl + 'img/mgr/treehill-studio@2x.png 2x" alt="Treehill Studio" style="margin-top: 10px"><br>' +
-                            '&copy; 2021-2024 by <a href="https://treehillstudio.com" target="_blank">treehillstudio.com</a></span>';
+                            '&copy; 2021-2026 by <a href="https://treehillstudio.com" target="_blank">treehillstudio.com</a></span>';
                         Ext.Msg.show({
                             title: _('crosscontextssettings') + ' ' + CrossContextsSettings.config.version,
                             msg: msg,
@@ -105,7 +105,7 @@ CrossContextsSettings.panel.Overview = function (config) {
             xtype: 'modx-tabs',
             border: true,
             stateful: true,
-            stateId: 'babel-panel-overview',
+            stateId: 'crosscontextssettings-panel-overview',
             stateEvents: ['tabchange'],
             getState: function () {
                 return {
@@ -128,9 +128,7 @@ CrossContextsSettings.panel.Overview = function (config) {
                             Ext.getCmp('crosscontextssettings-grid-system-settings').getStore().reload();
                         }
                     } else if (t.xtype === 'crosscontextssettings-panel-hometab') {
-                        MODx.request.ns = '';
-                        MODx.request.area = '';
-                        if (Ext.getCmp('crosscontextssettings-grid-settings')) {
+                        if (t.tabtype === 'contextssettings' && Ext.getCmp('crosscontextssettings-grid-settings')) {
                             Ext.getCmp('crosscontextssettings-grid-settings').getStore().reload();
                         }
                     }

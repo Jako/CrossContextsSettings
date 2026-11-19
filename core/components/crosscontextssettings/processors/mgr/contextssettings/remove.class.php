@@ -37,8 +37,11 @@ class CrossContextsSettingsSettingsRemoveProcessor extends ObjectProcessor
         $props = $this->getProperties();
         $contexts = [];
 
+        // Only remove the setting in the contexts managed (and shown) by CrossContextsSettings
         $contextSettings = $this->modx->getCollection('modContextSetting', [
-            'key' => $this->getProperty($this->primaryKeyField)
+            'key' => $this->getProperty($this->primaryKeyField),
+            'context_key:!=' => 'mgr',
+            'context_key:IN' => $this->crosscontextssettings->getOption('contexts_keys') ?: [''],
         ]);
         if (!$contextSettings) {
             return $this->failure($this->modx->lexicon('setting_err_nf'));
@@ -50,20 +53,15 @@ class CrossContextsSettingsSettingsRemoveProcessor extends ObjectProcessor
             ]);
             if ($result->isError()) {
                 $response = $result->getAllErrors();
-                return $this->failure($response[0] ?? '');
+                $message = $response[0] ?? $this->modx->lexicon('setting_err_remove');
+                $this->modx->log(xPDO::LOG_LEVEL_ERROR, $message, '', 'CrossContextsSettings');
+                $this->refreshContexts($contexts);
+                return $this->failure($message);
             }
             $contexts[$setting->get('context_key')] = 1;
         }
 
-        if ($this->crosscontextssettings->getOption('clear_cache')) {
-            $this->modx->runProcessor('mgr/contexts/clearcache', [
-                'ctxs' => $contexts,
-            ], [
-                'processors_path' => $this->crosscontextssettings->getOption('processorsPath')
-            ]);
-        }
-
-        $this->modx->invokeEvent('OnSiteRefresh');
+        $this->refreshContexts($contexts);
 
         return $this->success();
     }

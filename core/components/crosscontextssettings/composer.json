@@ -1,7 +1,7 @@
 {
   "name": "treehillstudio/crosscontextssettings",
   "description": "Manage the settings of different contexts in one place",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "authors": [
     {
       "name": "Rico Goldsky",
@@ -17,11 +17,11 @@
   "license": "GPL-2.0-or-later",
   "config": {
     "platform": {
-      "php": "7.2.5"
+      "php": "7.2"
     }
   },
   "require": {
-    "php": ">=7.2.5",
+    "php": ">=7.2",
     "ext-json": "*"
   },
   "autoload": {

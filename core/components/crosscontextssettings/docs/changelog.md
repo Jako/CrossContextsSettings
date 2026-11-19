@@ -5,11 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.2.8] - TBA
+## [1.2.8] - 2026-11-19
 
 ### Changed
 
-- Include a possible scrollbar height in the context setting grid height
+- Create, update and remove context settings only in the displayed contexts, never in the `mgr` context
+- Restrict the custom manager page and its menu entry to users with the `settings` permission
+- Load the values of the contexts settings grid with one query per page
+- Improve the namespace and area filters of the contexts settings grid
+- Don't expose server paths in the manager page options
+
+### Fixed
+
+- Fix editing or saving a context setting changing its xtype, namespace and area in the other contexts
+- Fix creating a setting without any value or when it already exists in one of the contexts
+- Fix the context cache not being cleared after some changes
+- Fix the contexts settings grid with `ONLY_FULL_GROUP_BY` enabled
+- Fix several issues of the filters, tabs, system settings and lexicon entries in the custom manager page
+- Validate the input of the processors
 
 ## [1.2.7] - 2024-03-20
 

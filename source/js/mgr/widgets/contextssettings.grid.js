@@ -104,6 +104,7 @@ CrossContextsSettings.grid.ContextsSettings = function (config) {
             xtype: 'modx-combo-namespace',
             id: this.ident + '-filter-namespace',
             emptyText: _('namespace_filter'),
+            value: MODx.request.ns || 'core',
             width: 150,
             listeners: {
                 select: {
@@ -115,8 +116,10 @@ CrossContextsSettings.grid.ContextsSettings = function (config) {
             xtype: 'modx-combo-area',
             id: this.ident + '-filter-area',
             emptyText: _('area_filter'),
+            value: MODx.request.area || '',
             baseParams: {
-                action: 'system/settings/getAreas'
+                action: 'system/settings/getAreas',
+                namespace: MODx.request.ns || 'core'
             },
             width: 250,
             listeners: {
@@ -130,7 +133,7 @@ CrossContextsSettings.grid.ContextsSettings = function (config) {
             name: 'filter_key',
             id: this.ident + '-filter-key',
             cls: 'x-form-filter',
-            emptyText: _('search_by_key'),
+            emptyText: _('search_by_key') || _('search'),
             listeners: {
                 change: {
                     fn: this.filterByKey,
@@ -209,7 +212,7 @@ Ext.extend(CrossContextsSettings.grid.ContextsSettings, MODx.grid.Grid, {
             r = this.menu.record;
         } else {
             r = {
-                namespace: Ext.getCmp(this.ident + '-filter-namespace').value || '',
+                namespace: Ext.getCmp(this.ident + '-filter-namespace').getValue() || 'core',
                 area: Ext.getCmp(this.ident + '-filter-area').value || '',
             }
         }
@@ -251,26 +254,35 @@ Ext.extend(CrossContextsSettings.grid.ContextsSettings, MODx.grid.Grid, {
         store.baseParams.key = '';
         store.baseParams.namespace = '';
         store.baseParams.area = '';
-        Ext.getCmp(this.ident + '-filter-namespace').reset();
-        Ext.getCmp(this.ident + '-filter-area').reset();
+        Ext.getCmp(this.ident + '-filter-namespace').clearValue();
+        var acb = Ext.getCmp(this.ident + '-filter-area');
+        acb.store.baseParams.namespace = '';
+        acb.store.removeAll();
+        delete acb.lastQuery;
+        acb.clearValue();
         Ext.getCmp(this.ident + '-filter-key').reset();
         this.getBottomToolbar().changePage(1);
-        this.refresh();
     },
     filterByKey: function (tf, newValue) {
+        // Search by key in all namespaces/areas and show that in the filter combos
         this.getStore().baseParams.key = newValue;
         this.getStore().baseParams.namespace = '';
+        this.getStore().baseParams.area = '';
+        Ext.getCmp(this.ident + '-filter-namespace').clearValue();
+        var acb = Ext.getCmp(this.ident + '-filter-area');
+        acb.store.baseParams.namespace = '';
+        acb.store.removeAll();
+        delete acb.lastQuery;
+        acb.clearValue();
         this.getBottomToolbar().changePage(1);
-        this.refresh();
         return true;
     },
     filterByNamespace: function (cb, rec) {
         this.getStore().baseParams.namespace = rec.data.name;
         this.getStore().baseParams.area = '';
         this.getBottomToolbar().changePage(1);
-        this.refresh();
 
-        var acb = Ext.getCmp('crosscontextssettings-filter-area');
+        var acb = Ext.getCmp(this.ident + '-filter-area');
         if (acb) {
             var s = acb.store;
             s.baseParams.namespace = rec.data.name;
@@ -282,7 +294,6 @@ Ext.extend(CrossContextsSettings.grid.ContextsSettings, MODx.grid.Grid, {
     filterByArea: function (cb, rec) {
         this.getStore().baseParams.area = rec.data.v;
         this.getBottomToolbar().changePage(1);
-        this.refresh();
     },
     renderDynField: function (v, md, rec, ri, ci, s, g) {
         var r = s.getAt(ri).data;
@@ -292,14 +303,8 @@ Ext.extend(CrossContextsSettings.grid.ContextsSettings, MODx.grid.Grid, {
             f = MODx.grid.Grid.prototype.rendYesNo;
             return f(v, md, rec, ri, ci, s, g);
         } else if (r.xtype === 'datefield') {
-            return function (v) {
-                if (typeof v === 'string' && v !== '' && Date.parseDate(v, 'Y-m-d H:i:s')) {
-                    v = Date.parseDate(v, 'Y-m-d H:i:s');
-                    return Ext.util.Format.date(v, MODx.config.manager_date_format);
-                } else {
-                    return v;
-                }
-            }
+            var d = (typeof v === 'string' && v !== '') ? Date.parseDate(v, 'Y-m-d H:i:s') : null;
+            return d ? Ext.util.Format.date(d, MODx.config.manager_date_format) : v;
         } else if (r.xtype === 'text-password' || r.xtype === 'modx-text-password') {
             f = MODx.grid.Grid.prototype.rendPassword;
             return f(v, md, rec, ri, ci, s, g);

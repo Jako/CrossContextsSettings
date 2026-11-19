@@ -47,4 +47,50 @@ abstract class ObjectProcessor extends modObjectProcessor
     {
         return ($this->getProperty($k, $default) === 'true' || $this->getProperty($k, $default) === true || $this->getProperty($k, $default) === '1' || $this->getProperty($k, $default) === 1);
     }
+
+    /**
+     * Normalize a submitted setting value. An empty value stays empty (it
+     * means "no setting in this context"), boolean values are normalized to
+     * '1' or '0'.
+     *
+     * @param mixed $value
+     * @param string $xtype
+     * @return string
+     */
+    public function normalizeSettingValue($value, $xtype)
+    {
+        if ($value === null || is_array($value)) {
+            return '';
+        }
+        if (is_bool($value)) {
+            $value = $value ? '1' : '0';
+        }
+        $value = trim((string)$value);
+        if ($value !== '' && in_array($xtype, ['combo-boolean', 'modx-combo-boolean'])) {
+            $value = in_array(strtolower($value), ['1', 'true', 'yes', 'on'], true) ? '1' : '0';
+        }
+        return $value;
+    }
+
+    /**
+     * Clear the cache of the changed contexts and invoke OnSiteRefresh. This
+     * is called after a failure too, since the contexts changed before the
+     * failure need a fresh cache as well.
+     *
+     * @param array $contexts The changed contexts as key => 1
+     */
+    public function refreshContexts(array $contexts)
+    {
+        if (empty($contexts)) {
+            return;
+        }
+        if ($this->crosscontextssettings->getOption('clear_cache')) {
+            $this->modx->runProcessor('mgr/contexts/clearcache', [
+                'ctxs' => $contexts,
+            ], [
+                'processors_path' => $this->crosscontextssettings->getOption('processorsPath')
+            ]);
+        }
+        $this->modx->invokeEvent('OnSiteRefresh');
+    }
 }

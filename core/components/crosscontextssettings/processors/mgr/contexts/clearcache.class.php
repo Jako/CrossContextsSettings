@@ -20,7 +20,7 @@ class CrossContextsSettingsContextsClearCacheProcessor extends ObjectProcessor
     public function initialize()
     {
         $ctxs = $this->getProperty('ctxs', false);
-        if (empty($ctxs)) {
+        if (empty($ctxs) || !is_array($ctxs)) {
             return $this->modx->lexicon('crosscontextssettings.context_err_ns');
         }
         $check = false;
